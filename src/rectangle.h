@@ -91,4 +91,5 @@ Rectangle::getTopLeftCorner() const
 	return corner;
 }
 
+
 #endif // RECTANGLE_H

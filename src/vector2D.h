@@ -17,10 +17,15 @@ public:
 
 	// Coordenadas del vector
 	T getX() const { return x; }
+	T getY() const { return y; }
+
 
 	// Operadores
 	Vector2D operator+(const Vector2D& otro) const {
 		return {x + otro.x, y + otro.y};
+	}
+	Vector2D operator+=(const Vector2D& otro) {
+		return { x += otro.x, y += otro.y };
 	}
 
 	// TODO: completar
@@ -33,6 +38,6 @@ public:
 
 // TODO: definir alias Point2D<T>
 template<std::floating_point T = float>
-using SDL_Point = Vector2D<T>;
+using Point2D = Vector2D<T>;
 
 #endif // VECTOR2D_H
