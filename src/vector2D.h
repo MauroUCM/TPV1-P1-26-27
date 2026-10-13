@@ -18,6 +18,10 @@ public:
 	// Coordenadas del vector
 	T getX() const { return x; }
 	T getY() const { return y; }
+	T lenght() const {
+		
+		return x;
+	}
 
 
 	// Operadores

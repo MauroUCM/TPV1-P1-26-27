@@ -1,10 +1,8 @@
 #include "game.h"
-
 #include <string>
-
 #include <SDL3_image/SDL_image.h>
-
 #include "texture.h"
+#include "rectangle.h"
 
 using namespace std;
 
@@ -39,6 +37,8 @@ Game::Game()
 	                                 0, &window, &renderer))
 		throw "window or renderer: "s + SDL_GetError();
 
+	SDL_SetRenderDrawColor(renderer, 44, 168, 94, SDL_ALPHA_OPAQUE);
+
 	// Carga las texturas al inicio
 	try {
 		textures.fill(nullptr);
@@ -55,7 +55,7 @@ Game::Game()
 	}
 
 	// Configura que se pueden utilizar capas translúcidas
-	// SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
 	// TODO: crear los objetos del juego
 }
@@ -63,6 +63,7 @@ Game::Game()
 Game::~Game()
 {
 	// TODO: liberar la memoria reservada por la clase
+	for (Texture* tex : textures) delete tex;
 }
 
 void
@@ -86,6 +87,10 @@ Game::run()
 {
 	while (!exit) {
 		// TODO: implementar bucle del juego
+
+		update();
+		handleEvents();
+		render();
 	}
 }
 
