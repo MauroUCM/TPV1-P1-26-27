@@ -2,7 +2,6 @@
 #include <string>
 #include <SDL3_image/SDL_image.h>
 #include "texture.h"
-#include "rectangle.h"
 
 using namespace std;
 
@@ -51,6 +50,7 @@ Game::Game()
 	}
 	catch (...) {
 		// TODO: liberar la memoria reservada
+		for (Texture* tex : textures) delete tex;
 		throw; // relanza la excepción
 	}
 
@@ -108,9 +108,9 @@ Game::handleEvents()
 	}
 }
 
-// bool
-// Game::checkCollision(const Rectangle& rect)
-// {
-//	// TODO
-//	return false;
-// }
+ bool
+ Game::checkCollision(const Rectangle& rect)
+ {
+	// TODO
+	return false;
+ }

@@ -5,6 +5,7 @@
 #include <array>
 #include <istream>
 #include <vector>
+#include "rectangle.h"
 
 // #include "rectangle.h"
 
@@ -40,6 +41,8 @@ private:
 	void render() const;
 	void update();
 	void handleEvents();
+
+	bool checkCollision(const Rectangle& rect);
 
 	bool exit;
 
