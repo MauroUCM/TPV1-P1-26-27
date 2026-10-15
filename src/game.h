@@ -5,12 +5,12 @@
 #include <array>
 #include <istream>
 #include <vector>
+#include <random>
 #include "rectangle.h"
-
-// #include "rectangle.h"
 
 // Declaraciones anticipadas
 class Texture;
+class Balloon;
 
 /**
  * Clase principal del juego.
@@ -30,7 +30,14 @@ public:
 	{
 		BOW = 0,
 		ARROW,
+		BALLOONS,
 		NUM_TEXTURES
+	};
+
+	// struct para colores RGB
+	struct RGBColor
+	{
+		Uint8 r, g, b;
 	};
 
 private:
@@ -46,8 +53,13 @@ private:
 
 	bool exit;
 
+	// Atributos del juego
+	int nArrows = 7;
+	int balDelay = 1000;
+	RGBColor bgcolor = RGBColor(44, 168, 94);
+
 	// Elemento del juego
-	// TODO: añadir atributos para los objetos del juego
+	std::vector<Balloon> baloons;
 
 public:
 	Game();

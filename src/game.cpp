@@ -2,6 +2,8 @@
 #include <string>
 #include <SDL3_image/SDL_image.h>
 #include "texture.h"
+#include "Balloon.h"
+
 
 using namespace std;
 
@@ -21,7 +23,9 @@ struct TextureSpec
 
 constexpr array<TextureSpec, Game::NUM_TEXTURES> textureList{
 	TextureSpec{"bow.png", 1, 2},
-	{"arrow.png"},
+	TextureSpec{"arrow.png"},
+	TextureSpec{"balloons.png", 7 , 6},
+
 };
 
 Game::Game()
@@ -36,7 +40,7 @@ Game::Game()
 	                                 0, &window, &renderer))
 		throw "window or renderer: "s + SDL_GetError();
 
-	SDL_SetRenderDrawColor(renderer, 44, 168, 94, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(renderer, bgcolor.r, bgcolor.g, bgcolor.b, SDL_ALPHA_OPAQUE);
 
 	// Carga las texturas al inicio
 	try {
@@ -72,6 +76,7 @@ Game::render() const
 	SDL_RenderClear(renderer);
 
 	// TODO
+	for (Balloon bal : baloons) bal.render();
 
 	SDL_RenderPresent(renderer);
 }
