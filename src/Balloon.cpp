@@ -2,7 +2,7 @@
 
 Balloon::Balloon(Vector2D<float> pos, Vector2D<float> vel, Texture* text, int color) : 
 	_pos(pos), _vel(vel), _text(text) {
-	_rec = Rectangle(pos, 10, 10);
+	_rec = Rectangle(pos, 150, 150);
 
 }
 

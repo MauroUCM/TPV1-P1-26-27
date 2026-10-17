@@ -66,6 +66,8 @@ public:
 	Rectangle scaled(scalar_t sx, scalar_t sy) const;
 	/// Mueve el rectángulo en la dirección del vector
 	void move(Vector2D<> v);
+	/// Mueve el rectángulo a la posición del vector
+	void moveTo(Vector2D<> v);
 
 // Conexión con la SDL
 #ifdef WITH_SDL

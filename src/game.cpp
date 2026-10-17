@@ -61,7 +61,8 @@ Game::Game()
 	// Configura que se pueden utilizar capas translúcidas
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
-	// TODO: crear los objetos del juego
+	// Crea los objetos del juego
+	addBalloon();
 }
 
 Game::~Game()
@@ -76,7 +77,7 @@ Game::render() const
 	SDL_RenderClear(renderer);
 
 	// TODO
-	for (Balloon bal : baloons) bal.render();
+	for (Balloon bal : balloons) bal.render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -85,6 +86,8 @@ void
 Game::update()
 {
 	// TODO
+	for (Balloon& bal : balloons) bal.update(10);
+
 }
 
 void
@@ -118,4 +121,13 @@ Game::handleEvents()
  {
 	// TODO
 	return false;
+ }
+
+ void Game::addBalloon() {
+	 balloons.push_back(Balloon(
+		 Vector2D(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f), 
+		 Vector2D(0.0f, 0.0f), 
+		 getTexture(BALLOONS), 
+		 0));
+
  }
