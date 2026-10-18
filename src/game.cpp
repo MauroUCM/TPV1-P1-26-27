@@ -4,7 +4,6 @@
 #include "texture.h"
 #include "Balloon.h"
 
-
 using namespace std;
 
 // Constantes
@@ -61,8 +60,13 @@ Game::Game()
 	// Configura que se pueden utilizar capas translúcidas
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
+	// Inicializa variables
+	rndGenerator = std::mt19937_64(std::random_device()());
+	lastUpdate = SDL_GetTicks();
+	balElapsed = 0;
+
 	// Crea los objetos del juego
-	addBalloon();
+	addBalloonRnd();
 }
 
 Game::~Game()
@@ -83,11 +87,17 @@ Game::render() const
 }
 
 void
-Game::update()
+Game::update(const float& delta)
 {
-	// TODO
-	for (Balloon& bal : balloons) bal.update(10);
+	// generación de globos
+	balElapsed += delta;
+	if (balElapsed >= balDelay) {
+		balElapsed = 0;
+		addBalloonRnd();
+	}
 
+	// globos
+	for (Balloon& bal : balloons) bal.update(delta);
 }
 
 void
@@ -96,7 +106,10 @@ Game::run()
 	while (!exit) {
 		// TODO: implementar bucle del juego
 
-		update();
+		float currentUpate = SDL_GetTicks();
+		update(currentUpate - lastUpdate);
+		lastUpdate = currentUpate;
+
 		handleEvents();
 		render();
 	}
@@ -123,11 +136,12 @@ Game::handleEvents()
 	return false;
  }
 
- void Game::addBalloon() {
+ void Game::addBalloonRnd() {
 	 balloons.push_back(Balloon(
-		 Vector2D(WINDOW_WIDTH / 2.0f, WINDOW_HEIGHT / 2.0f), 
-		 Vector2D(0.0f, 0.0f), 
+		 Vector2D(
+			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - 125)(rndGenerator),
+			 (float)WINDOW_HEIGHT), 
+		 -(float)uniform_int_distribution<int>(100, 500)(rndGenerator),
 		 getTexture(BALLOONS), 
-		 0));
-
+		 uniform_int_distribution<int>(0,6)(rndGenerator)));
  }

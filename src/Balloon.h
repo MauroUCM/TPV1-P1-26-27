@@ -6,7 +6,7 @@
 class Balloon
 {
 public:
-	Balloon(Vector2D<float> pos, Vector2D<float> vel, Texture* text, int color = 0);
+	Balloon(Vector2D<float> pos, float vel, Texture* text, int color = 0);
 	~Balloon();
 
 	void render();

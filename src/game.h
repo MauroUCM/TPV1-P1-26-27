@@ -46,18 +46,23 @@ private:
 	std::array<Texture*, NUM_TEXTURES> textures;
 
 	void render() const;
-	void update();
+	void update(const float& delta);
 	void handleEvents();
 	bool checkCollision(const Rectangle& rect);
 
-	void addBalloon();
+	void addBalloonRnd();
 
 	bool exit;
 
 	// Atributos del juego
 	int nArrows = 7;
-	int balDelay = 1000;
+	float balDelay = 500;
 	RGBColor bgcolor = RGBColor(44, 168, 94);
+	
+	// Variables internas
+	std::mt19937_64 rndGenerator;
+	float lastUpdate;
+	float balElapsed;
 
 	// Elemento del juego
 	std::vector<Balloon> balloons;
