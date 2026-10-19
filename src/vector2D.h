@@ -31,8 +31,9 @@ public:
 	Vector2D operator*(const float& otro) {
 		return { x * otro, y * otro };
 	}
-
-	// TODO: completar
+	float operator*(const Vector2D& otro) {
+		return { (x * otro.x) + (y * otro.y) };
+	}
 
 	// Operadores de entrada/salida
 	friend std::ostream& operator<<(std::ostream& out, const Vector2D& v) {

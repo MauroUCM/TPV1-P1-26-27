@@ -3,6 +3,7 @@
 #include <SDL3_image/SDL_image.h>
 #include "texture.h"
 #include "Balloon.h"
+#include "Bow.h"
 
 using namespace std;
 
@@ -66,13 +67,19 @@ Game::Game()
 	balElapsed = 0;
 
 	// Crea los objetos del juego
-	addBalloonRnd();
+	bow = new Bow(Vector2D<float>(
+			WINDOW_WIDTH / 16, 
+			WINDOW_HEIGHT / 2),
+		10, 
+		getTexture(BOW), 
+		nArrows);
 }
 
 Game::~Game()
 {
-	// TODO: liberar la memoria reservada por la clase
+	// Liberacion de la memoria reservada
 	for (Texture* tex : textures) delete tex;
+	delete bow;
 }
 
 void
@@ -82,6 +89,7 @@ Game::render() const
 
 	// TODO
 	for (Balloon bal : balloons) bal.render();
+	bow->render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -131,7 +139,7 @@ Game::handleEvents()
 		if (event.type == SDL_EVENT_QUIT)
 			exit = true;
 
-		// TODO
+		bow->handleEvent(event);
 	}
 }
 
@@ -145,7 +153,7 @@ Game::handleEvents()
  void Game::addBalloonRnd() {
 	 balloons.push_back(Balloon(
 		 Vector2D(
-			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - 125)(rndGenerator),
+			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
 			 (float)WINDOW_HEIGHT), 
 		 -(float)uniform_int_distribution<int>(100, 500)(rndGenerator),
 		 getTexture(BALLOONS), 

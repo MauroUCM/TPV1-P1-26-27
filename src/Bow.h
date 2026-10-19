@@ -3,10 +3,12 @@
 #include "vector2D.h"
 #include "texture.h"
 
+constexpr int BOW_SIZE = 100;
+
 class Bow
 {
 public:
-	Bow(Vector2D<float> pos, float vel, Texture* text, int flechas);
+	Bow(Vector2D<float> pos, float vel, Texture* text, int arrows);
 	~Bow();
 
 	void render() const;
@@ -15,12 +17,12 @@ public:
 
 private:
 	Vector2D<float> _pos;
-	Vector2D<float> _vel;
+	float _vel;
 
 	Rectangle _rec;
 	Texture* _text;
 
 	bool _armed;
-	int _flechas;
+	int _arrows;
 };
 

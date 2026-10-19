@@ -11,6 +11,7 @@
 // Declaraciones anticipadas
 class Texture;
 class Balloon;
+class Bow;
 
 /**
  * Clase principal del juego.
@@ -66,6 +67,7 @@ private:
 
 	// Elemento del juego
 	std::vector<Balloon> balloons;
+	Bow* bow;
 
 public:
 	Game();
