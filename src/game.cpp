@@ -75,16 +75,13 @@ Game::Game()
 		nArrows);
 }
 
-Game::~Game()
-{
+Game::~Game() {
 	// Liberacion de la memoria reservada
 	for (Texture* tex : textures) delete tex;
 	delete bow;
 }
 
-void
-Game::render() const
-{
+void Game::render() const {
 	SDL_RenderClear(renderer);
 
 	// TODO
@@ -94,9 +91,7 @@ Game::render() const
 	SDL_RenderPresent(renderer);
 }
 
-void
-Game::update(const float& delta)
-{
+void Game::update(const float& delta) {
 	// generación de globos
 	balElapsed += delta;
 	if (balElapsed >= balDelay) {
@@ -112,43 +107,34 @@ Game::update(const float& delta)
 		}
 	}
 
+	lastUpdate = SDL_GetTicks();
 }
 
-void
-Game::run()
-{
-	while (!exit) {
-		// TODO: implementar bucle del juego
-
+void Game::run() {
+	while (!exit) { // bucle del juego
 		float currentUpate = SDL_GetTicks();
 		update(currentUpate - lastUpdate);
-		lastUpdate = currentUpate;
-
 		handleEvents();
 		render();
 	}
 }
 
-void
-Game::handleEvents()
-{
+void Game::handleEvents() {
 	SDL_Event event;
 
 	// Only quit is handled directly, everything else is delegated
 	while (SDL_PollEvent(&event)) {
 		if (event.type == SDL_EVENT_QUIT)
 			exit = true;
-
-		bow->handleEvent(event);
+		if(event.type == SDL_EVENT_KEY_DOWN)
+			bow->handleEvent(event);
 	}
 }
 
- bool
- Game::checkCollision(const Rectangle& rect)
- {
+bool Game::checkCollision(const Rectangle& rect){
 	// TODO
 	return false;
- }
+}
 
  void Game::addBalloonRnd() {
 	 balloons.push_back(Balloon(
