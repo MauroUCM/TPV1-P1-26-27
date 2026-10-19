@@ -3,13 +3,15 @@
 #include "vector2D.h"
 #include "texture.h"
 
+constexpr int BALLOON_SIZE = 150;
+
 class Balloon
 {
 public:
 	Balloon(Vector2D<float> pos, float vel, Texture* text, int color = 0);
 	~Balloon();
 
-	void render();
+	void render() const;
 	bool update(float delta);
 
 	bool hit(const Rectangle& obj);
