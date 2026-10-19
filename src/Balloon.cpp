@@ -19,9 +19,7 @@ void Balloon::render() const {
 bool Balloon::update(float delta) {
 	_rec.move(_vel * delta);
 
-	if (_rec.getTopLeftCorner().getY() < -BALLOON_SIZE) {
-		_alive = false;
-	}
+	if (_rec.getTopLeftCorner().getY() < -BALLOON_SIZE) _alive = false;
 
 	return _alive;
 }

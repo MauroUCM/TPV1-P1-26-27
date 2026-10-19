@@ -97,7 +97,13 @@ Game::update(const float& delta)
 	}
 
 	// globos
-	for (Balloon& bal : balloons) bal.update(delta);
+	for (int i = 0; i < balloons.size(); i++) {
+		if (!balloons[i].update(delta)) {
+			balloons.erase(balloons.begin() + i);
+			i--;
+		}
+	}
+
 }
 
 void
