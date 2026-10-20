@@ -2,7 +2,7 @@
 #include "game.h"
 
 Bow::Bow(Vector2D<float> pos, float speed, Texture* text, int arrows)
-	: _pos(pos), _speed(speed / 1000), _text(text), _arrows(arrows) {
+	: _pos(pos), _speed(speed / 10000), _text(text), _arrows(arrows) {
 	_rec = Rectangle(pos, BOW_SIZE, BOW_SIZE);
 	_armed = false;
 	_vel = Vector2D<float>(0.0f, 0.0f);
@@ -20,7 +20,16 @@ void Bow::render() const {
 }
 
 void Bow::update(float delta) {
-	_rec.move(_vel);
+	_rec.move(_vel * delta);
+
+	//std::cout << _rec.getTopLeftCorner() << "\n";
+
+	//if (_rec.getTopLeftCorner().getY() > Game::WINDOW_HEIGHT - _rec.getHeight()) {
+	//	_rec.getTopLeftCorner().setY((float)Game::WINDOW_HEIGHT - _rec.getHeight() - 1);
+	//}
+	//else if (_rec.getTopLeftCorner().getY() < 0) {
+	//	_rec.getTopLeftCorner().setY(1.0f);
+	//}
 }
 
 void Bow::handleEvent(const SDL_Event& event) {
@@ -35,7 +44,7 @@ void Bow::handleEvent(const SDL_Event& event) {
 			if (_rec.getTopLeftCorner().getY() > 0) _vel.setY(-_speed);
 			break;
 		case SDLK_LEFT:
-			_armed = true;
+			if(_arrows > 0) _armed = true;
 			break;
 		case SDLK_RIGHT:
 			shoot();

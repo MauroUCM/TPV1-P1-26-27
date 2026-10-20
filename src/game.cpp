@@ -70,7 +70,7 @@ Game::Game()
 	bow = new Bow(Vector2D<float>(
 			WINDOW_WIDTH / 16, 
 			WINDOW_HEIGHT / 2),
-		70.0f, 
+		150.0f, 
 		getTexture(BOW), 
 		nArrows);
 }
@@ -113,11 +113,14 @@ void Game::update(const float& delta) {
 }
 
 void Game::run() {
-	while (!exit) { // bucle del juego
-		float currentUpate = SDL_GetTicks();
-		update(currentUpate - lastUpdate);
+	while (!exit) { // bucle principal del juego
+		float frameTime = SDL_GetTicks();
+
 		handleEvents();
+		update(FRAME_PERIOD);
 		render();
+		if (frameTime < FRAME_PERIOD)
+			SDL_Delay(FRAME_PERIOD - frameTime);
 	}
 }
 
@@ -144,7 +147,7 @@ bool Game::checkCollision(const Rectangle& rect){
 		 Vector2D(
 			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
 			 (float)WINDOW_HEIGHT), 
-		 -(float)uniform_int_distribution<int>(100, 500)(rndGenerator),
+		 -(float)uniform_int_distribution<int>(1, 10)(rndGenerator),
 		 getTexture(BALLOONS), 
 		 uniform_int_distribution<int>(0,6)(rndGenerator)));
  }
