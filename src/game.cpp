@@ -70,7 +70,7 @@ Game::Game()
 	bow = new Bow(Vector2D<float>(
 			WINDOW_WIDTH / 16, 
 			WINDOW_HEIGHT / 2),
-		150.0f, 
+		10.0f, 
 		getTexture(BOW), 
 		nArrows);
 }
@@ -119,8 +119,8 @@ void Game::run() {
 		handleEvents();
 		update(FRAME_PERIOD);
 		render();
-		if (frameTime < FRAME_PERIOD)
-			SDL_Delay(FRAME_PERIOD - frameTime);
+		if (SDL_GetTicks() - frameTime < FRAME_PERIOD)
+			SDL_Delay(FRAME_PERIOD - SDL_GetTicks() - frameTime);
 	}
 }
 
@@ -132,8 +132,6 @@ void Game::handleEvents() {
 		if (event.type == SDL_EVENT_QUIT)
 			exit = true;
 		bow->handleEvent(event);
-		//if(event.type == SDL_EVENT_KEY_DOWN)
-		//	bow->handleEvent(event);
 	}
 }
 
