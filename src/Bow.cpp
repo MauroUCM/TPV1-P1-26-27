@@ -2,7 +2,7 @@
 #include "game.h"
 
 Bow::Bow(Vector2D<float> pos, float speed, Texture* text, int arrows)
-	: _pos(pos), _speed(speed / 1000), _text(text), _arrows(arrows) {
+	: _pos(pos), _speed(speed / 10), _text(text), _arrows(arrows) {
 	_rec = Rectangle(pos, BOW_SIZE, BOW_SIZE);
 	_armed = false;
 	_vel = Vector2D<float>(0.0f, 0.0f);

@@ -114,13 +114,16 @@ void Game::update(const float& delta) {
 
 void Game::run() {
 	while (!exit) { // bucle principal del juego
-		float frameTime = SDL_GetTicks();
+		float currentTime = SDL_GetTicks();
 
 		handleEvents();
-		update(FRAME_PERIOD);
+		update(currentTime - lastUpdate);
 		render();
-		if (SDL_GetTicks() - frameTime < FRAME_PERIOD)
-			SDL_Delay(FRAME_PERIOD - SDL_GetTicks() - frameTime);
+
+		float elapsedRun = SDL_GetTicks() - currentTime;
+		if (elapsedRun < FRAME_PERIOD) {
+			SDL_Delay(FRAME_PERIOD - elapsedRun);
+		}
 	}
 }
 
@@ -131,6 +134,7 @@ void Game::handleEvents() {
 	while (SDL_PollEvent(&event)) {
 		if (event.type == SDL_EVENT_QUIT)
 			exit = true;
+
 		bow->handleEvent(event);
 	}
 }
