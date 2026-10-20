@@ -22,15 +22,6 @@ void Bow::render() const {
 bool Bow::update(float delta) {
 	_rec.move(_vel * delta);
 
-	//std::cout << _rec.getTopLeftCorner() << "\n";
-
-	//if (_rec.getTopLeftCorner().getY() > Game::WINDOW_HEIGHT - _rec.getHeight()) {
-	//	_rec.getTopLeftCorner().setY((float)Game::WINDOW_HEIGHT - _rec.getHeight() - 1);
-	//}
-	//else if (_rec.getTopLeftCorner().getY() < 0) {
-	//	_rec.getTopLeftCorner().setY(1.0f);
-	//}
-
 	return true;
 }
 
