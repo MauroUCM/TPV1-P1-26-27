@@ -21,6 +21,10 @@ public:
 	T getY() const { return y; }
 	T lenght() const { return std::sqrt((x * x) + (y * y)); }
 
+	// Setters
+	void setX(T newX) { x = newX; }
+	void setY(T newY) { y = newY; }
+
 	// Operadores
 	Vector2D operator+(const Vector2D& otro) const {
 		return {x + otro.x, y + otro.y};

@@ -70,7 +70,7 @@ Game::Game()
 	bow = new Bow(Vector2D<float>(
 			WINDOW_WIDTH / 16, 
 			WINDOW_HEIGHT / 2),
-		10, 
+		70.0f, 
 		getTexture(BOW), 
 		nArrows);
 }
@@ -92,12 +92,7 @@ void Game::render() const {
 }
 
 void Game::update(const float& delta) {
-	// generación de globos
-	balElapsed += delta;
-	if (balElapsed >= balDelay) {
-		balElapsed = 0;
-		addBalloonRnd();
-	}
+	bow->update(delta);
 
 	// globos
 	for (int i = 0; i < balloons.size(); i++) {
@@ -105,6 +100,13 @@ void Game::update(const float& delta) {
 			balloons.erase(balloons.begin() + i);
 			i--;
 		}
+	}
+
+	// generación de globos
+	balElapsed += delta;
+	if (balElapsed >= balDelay) {
+		balElapsed = 0;
+		addBalloonRnd();
 	}
 
 	lastUpdate = SDL_GetTicks();
@@ -126,8 +128,9 @@ void Game::handleEvents() {
 	while (SDL_PollEvent(&event)) {
 		if (event.type == SDL_EVENT_QUIT)
 			exit = true;
-		if(event.type == SDL_EVENT_KEY_DOWN)
-			bow->handleEvent(event);
+		bow->handleEvent(event);
+		//if(event.type == SDL_EVENT_KEY_DOWN)
+		//	bow->handleEvent(event);
 	}
 }
 

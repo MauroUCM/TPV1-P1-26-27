@@ -1,10 +1,11 @@
 #include "Bow.h"
 #include "game.h"
 
-Bow::Bow(Vector2D<float> pos, float vel, Texture* text, int arrows)
-	: _pos(pos),_vel(vel), _text(text), _arrows(arrows) {
+Bow::Bow(Vector2D<float> pos, float speed, Texture* text, int arrows)
+	: _pos(pos), _speed(speed / 1000), _text(text), _arrows(arrows) {
 	_rec = Rectangle(pos, BOW_SIZE, BOW_SIZE);
 	_armed = false;
+	_vel = Vector2D<float>(0.0f, 0.0f);
 }
 
 Bow::~Bow() {
@@ -19,26 +20,41 @@ void Bow::render() const {
 }
 
 void Bow::update(float delta) {
-
+	_rec.move(_vel);
 }
 
 void Bow::handleEvent(const SDL_Event& event) {
-	switch (event.key.key)
-	{
-	case SDLK_DOWN:
-		if (_rec.getTopLeftCorner().getY() < Game::WINDOW_HEIGHT - _rec.getHeight()) _rec.move({ 0.0f, _vel });
-		break;
-	case SDLK_UP:
-		if(_rec.getTopLeftCorner().getY() > 0) _rec.move({ 0.0f, -_vel });
-		break;
-	case SDLK_LEFT:
-		_armed = true;
-		break;
-	case SDLK_RIGHT:
-		shoot();
-		break;
-	default:
-		break;
+
+	if (event.type == SDL_EVENT_KEY_DOWN) {
+		switch (event.key.key)
+		{
+		case SDLK_DOWN:
+			if (_rec.getTopLeftCorner().getY() < Game::WINDOW_HEIGHT - _rec.getHeight()) _vel.setY(_speed);
+			break;
+		case SDLK_UP:
+			if (_rec.getTopLeftCorner().getY() > 0) _vel.setY(-_speed);
+			break;
+		case SDLK_LEFT:
+			_armed = true;
+			break;
+		case SDLK_RIGHT:
+			shoot();
+			break;
+		default:
+			break;
+		}
+	}if (event.type == SDL_EVENT_KEY_UP) {
+		switch (event.key.key)
+		{
+		case SDLK_DOWN:
+			_vel.setY(0.0f);
+			break;
+		case SDLK_UP:
+			_vel.setY(0.0f);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
