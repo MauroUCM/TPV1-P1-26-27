@@ -16,6 +16,8 @@ public:
 	void handleEvent(const SDL_Event& event);
 
 private:
+	void shoot();
+
 	Vector2D<float> _pos;
 	float _vel;
 
