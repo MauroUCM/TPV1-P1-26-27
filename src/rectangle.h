@@ -41,6 +41,8 @@ private:
 public:
 	/// Crea un rectángulo a partir de su esquina superior izquierda y sus dimensiones
 	Rectangle(Point2D<> topleft, scalar_t width, scalar_t height);
+	/// Crea un rectángulo cuadrado a partir de su esquina superior izquierda y su vertice
+	Rectangle(Point2D<> topleft, scalar_t widthHeight);
 	/// Crea un rectángulo degenerado en el origen
 	Rectangle();
 

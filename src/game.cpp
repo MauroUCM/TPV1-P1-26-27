@@ -4,6 +4,7 @@
 #include "texture.h"
 #include "Balloon.h"
 #include "Bow.h"
+#include "Arrow.h"
 
 using namespace std;
 
@@ -86,13 +87,13 @@ void Game::render() const {
 
 	// TODO
 	for (Balloon bal : balloons) bal.render();
-	bow->render();
+	if(bow) bow->render();
 
 	SDL_RenderPresent(renderer);
 }
 
 void Game::update(const float& delta) {
-	bow->update(delta);
+	if(bow) bow->update(delta);
 
 	// globos
 	for (int i = 0; i < balloons.size(); i++) {

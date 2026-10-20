@@ -37,6 +37,15 @@ Rectangle::Rectangle(Point2D<> topleft, scalar_t width, scalar_t height)
 {
 	assert(width >= 0);
 	assert(height >= 0);
+} 
+
+Rectangle::Rectangle(Point2D<> topleft, scalar_t widthHeight)
+  : corner(topleft)
+  , width(widthHeight)
+  , height(widthHeight)
+{
+	assert(width >= 0);
+	assert(height >= 0);
 }
 
 Rectangle::Rectangle()

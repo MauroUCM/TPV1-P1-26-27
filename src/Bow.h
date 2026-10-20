@@ -12,7 +12,7 @@ public:
 	~Bow();
 
 	void render() const;
-	void update(float delta);
+	bool update(float delta);
 	void handleEvent(const SDL_Event& event);
 
 private:

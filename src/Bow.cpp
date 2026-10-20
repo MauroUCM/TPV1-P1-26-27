@@ -3,7 +3,7 @@
 
 Bow::Bow(Vector2D<float> pos, float speed, Texture* text, int arrows)
 	: _pos(pos), _speed(speed / 10), _text(text), _arrows(arrows) {
-	_rec = Rectangle(pos, BOW_SIZE, BOW_SIZE);
+	_rec = Rectangle(pos, BOW_SIZE);
 	_armed = false;
 	_vel = Vector2D<float>(0.0f, 0.0f);
 }
@@ -19,7 +19,7 @@ void Bow::render() const {
 	}
 }
 
-void Bow::update(float delta) {
+bool Bow::update(float delta) {
 	_rec.move(_vel * delta);
 
 	//std::cout << _rec.getTopLeftCorner() << "\n";
@@ -30,6 +30,8 @@ void Bow::update(float delta) {
 	//else if (_rec.getTopLeftCorner().getY() < 0) {
 	//	_rec.getTopLeftCorner().setY(1.0f);
 	//}
+
+	return true;
 }
 
 void Bow::handleEvent(const SDL_Event& event) {

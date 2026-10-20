@@ -57,7 +57,7 @@ private:
 
 	// Atributos del juego
 	int nArrows = 7;
-	float balDelay = 1000;
+	float balDelay = 500;
 	RGBColor bgcolor = RGBColor(44, 168, 94);
 	
 	// Variables internas
