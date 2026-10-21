@@ -68,7 +68,8 @@ Game::Game()
 	balElapsed = 0;
 
 	// Crea los objetos del juego
-	bow = new Bow(Vector2D<float>(
+	bow = new Bow(this,
+		Vector2D<float>(
 			WINDOW_WIDTH / 16, 
 			WINDOW_HEIGHT / 2),
 		10.0f, 
@@ -87,6 +88,7 @@ void Game::render() const {
 
 	// TODO
 	for (Balloon bal : balloons) bal.render();
+	for (Arrow arr : arrows) arr.render();
 	if(bow) bow->render();
 
 	SDL_RenderPresent(renderer);
@@ -94,6 +96,13 @@ void Game::render() const {
 
 void Game::update(const float& delta) {
 	if(bow) bow->update(delta);
+
+	for (int i = 0; i < arrows.size(); i++) {
+		if (!arrows[i].update(delta)) {
+			arrows.erase(arrows.begin() + i);
+			i--;
+		}
+	}
 
 	// globos
 	for (int i = 0; i < balloons.size(); i++) {
@@ -150,7 +159,11 @@ bool Game::checkCollision(const Rectangle& rect){
 		 Vector2D(
 			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
 			 (float)WINDOW_HEIGHT), 
-		 -(float)uniform_int_distribution<int>(1, 10)(rndGenerator),
+		 -(float)uniform_int_distribution<int>(1, 5)(rndGenerator),
 		 getTexture(BALLOONS), 
 		 uniform_int_distribution<int>(0,6)(rndGenerator)));
+ }
+
+ void Game::addArrow(const Vector2D<float>& pos) {
+	 arrows.push_back(Arrow(this, pos, getTexture(ARROW), 100.0f));
  }

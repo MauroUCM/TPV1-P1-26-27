@@ -3,12 +3,12 @@
 #include "rectangle.h"
 #include "texture.h"
 
-constexpr int ARROW_SIZE = 50;
+constexpr int ARROW_SIZE = 20;
 
 class Arrow
 {
 public:
-	Arrow(Game& game, Vector2D<float> pos, Texture* text, float speed);
+	Arrow(Game* game, Vector2D<float> pos, Texture* text, float speed);
 	~Arrow();
 
 	void render();
@@ -20,6 +20,6 @@ private:
 	Rectangle _rec;
 	Texture* _text;
 	
-	Game& _game;
+	Game* _game;
 };
 

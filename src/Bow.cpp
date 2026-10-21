@@ -1,8 +1,8 @@
 #include "Bow.h"
 #include "game.h"
 
-Bow::Bow(Vector2D<float> pos, float speed, Texture* text, int arrows)
-	: _pos(pos), _speed(speed / 10), _text(text), _arrows(arrows) {
+Bow::Bow(Game* game, Vector2D<float> pos, float speed, Texture* text, int arrows)
+	: _game(game), _speed(speed / 10), _text(text), _arrows(arrows) {
 	_rec = Rectangle(pos, BOW_SIZE);
 	_armed = false;
 	_vel = Vector2D<float>(0.0f, 0.0f);
@@ -64,5 +64,6 @@ void Bow::shoot() {
 	if (_armed) {
 		_armed = false;
 		_arrows--;
+		_game->addArrow(_rec.getTopLeftCorner() + Vector2D(0.0f, (float)BOW_SIZE / 2));
 	}
 }

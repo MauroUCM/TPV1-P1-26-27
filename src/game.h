@@ -12,6 +12,7 @@
 class Texture;
 class Balloon;
 class Bow;
+class Arrow;
 
 /**
  * Clase principal del juego.
@@ -49,10 +50,9 @@ private:
 	void render() const;
 	void update(const float& delta);
 	void handleEvents();
-	bool checkCollision(const Rectangle& rect);
 
 	void addBalloonRnd();
-
+	
 	bool exit;
 
 	// Atributos del juego
@@ -67,11 +67,15 @@ private:
 
 	// Elemento del juego
 	std::vector<Balloon> balloons;
+	std::vector<Arrow> arrows;
 	Bow* bow;
 
 public:
 	Game();
 	~Game();
+
+	// spawnea un arrow
+	void addArrow(const Vector2D<float>& pos);
 
 	// Obtiene una textura por su nombre
 	Texture* getTexture(TextureName name) const;
@@ -80,7 +84,7 @@ public:
 	void run();
 
 	// Comprueba si hay algún objeto colocado en ese rectángulo
-	// bool checkCollision(const Rectangle& rect);
+	bool checkCollision(const Rectangle& rect);
 };
 
 inline Texture*
