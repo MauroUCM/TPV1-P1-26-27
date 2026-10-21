@@ -72,7 +72,7 @@ Game::Game()
 		Vector2D<float>(
 			WINDOW_WIDTH / 16, 
 			WINDOW_HEIGHT / 2),
-		10.0f, 
+		7.0f, 
 		getTexture(BOW), 
 		nArrows);
 }
@@ -80,6 +80,8 @@ Game::Game()
 Game::~Game() {
 	// Liberacion de la memoria reservada
 	for (Texture* tex : textures) delete tex;
+	for (Balloon* bal : balloons) delete bal;
+	for (Arrow* arr : arrows) delete arr;
 	delete bow;
 }
 
@@ -87,8 +89,8 @@ void Game::render() const {
 	SDL_RenderClear(renderer);
 
 	// TODO
-	for (Balloon bal : balloons) bal.render();
-	for (Arrow arr : arrows) arr.render();
+	for (Balloon* bal : balloons) bal->render();
+	for (Arrow* arr : arrows) arr->render();
 	if(bow) bow->render();
 
 	SDL_RenderPresent(renderer);
@@ -97,8 +99,10 @@ void Game::render() const {
 void Game::update(const float& delta) {
 	if(bow) bow->update(delta);
 
+	// flechas
 	for (int i = 0; i < arrows.size(); i++) {
-		if (!arrows[i].update(delta)) {
+		if (!arrows[i]->update(delta)) {
+			delete arrows[i];
 			arrows.erase(arrows.begin() + i);
 			i--;
 		}
@@ -106,8 +110,9 @@ void Game::update(const float& delta) {
 
 	// globos
 	for (int i = 0; i < balloons.size(); i++) {
-		if (!balloons[i].update(delta)) {
-			balloons.erase(balloons.begin() + i);
+		if (!balloons[i]->update(delta)) {
+			delete balloons[i];
+			balloons.erase(balloons.begin() + i);			
 			i--;
 		}
 	}
@@ -155,7 +160,7 @@ bool Game::checkCollision(const Rectangle& rect){
 }
 
  void Game::addBalloonRnd() {
-	 balloons.push_back(Balloon(
+	 balloons.push_back(new Balloon(
 		 Vector2D(
 			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
 			 (float)WINDOW_HEIGHT), 
@@ -165,5 +170,5 @@ bool Game::checkCollision(const Rectangle& rect){
  }
 
  void Game::addArrow(const Vector2D<float>& pos) {
-	 arrows.push_back(Arrow(this, pos, getTexture(ARROW), 100.0f));
+	 arrows.push_back(new Arrow(this, pos, getTexture(ARROW), 100.0f));
  }

@@ -66,8 +66,8 @@ private:
 	float balElapsed;
 
 	// Elemento del juego
-	std::vector<Balloon> balloons;
-	std::vector<Arrow> arrows;
+	std::vector<Balloon*> balloons;
+	std::vector<Arrow*> arrows;
 	Bow* bow;
 
 public:

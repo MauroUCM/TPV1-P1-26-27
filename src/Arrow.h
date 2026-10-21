@@ -17,7 +17,8 @@ public:
 private:
 	Vector2D<float> _vel;
 
-	Rectangle _rec;
+	Rectangle _renderRec;
+	Rectangle _colRec;
 	Texture* _text;
 	
 	Game* _game;
