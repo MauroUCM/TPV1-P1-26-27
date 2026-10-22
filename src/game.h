@@ -33,6 +33,7 @@ public:
 		BOW = 0,
 		ARROW,
 		BALLOONS,
+		REWARDS,
 		NUM_TEXTURES
 	};
 
