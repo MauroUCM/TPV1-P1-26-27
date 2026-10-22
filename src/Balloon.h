@@ -24,6 +24,7 @@ private:
 	Texture* _text;
 
 	int _color;
+	int _animationState;
 	bool _alive = true;
 };
 

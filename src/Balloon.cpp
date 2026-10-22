@@ -4,6 +4,7 @@ Balloon::Balloon(Vector2D<float> pos, float vel, Texture* text, int color)
 	: _pos(pos), _text(text), _color(color) {
 	_vel = Vector2D(0.0f, 1.0f) * (vel / 10);
 	_rec = Rectangle(pos, BALLOON_SIZE);
+	_animationState = 0;
 }
 
 Balloon::~Balloon() {
@@ -12,7 +13,7 @@ Balloon::~Balloon() {
 
 void Balloon::render() const {
 	if (_text != nullptr) {
-		_text->renderFrame(_rec.to_sdl(), _color, 0);
+		_text->renderFrame(_rec.to_sdl(), _color, _animationState);
 	}
 }
 
