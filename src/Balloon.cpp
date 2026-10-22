@@ -25,5 +25,9 @@ bool Balloon::update(float delta) {
 }
 
 bool Balloon::hit(const Rectangle& obj) {
-	return _rec.hasIntersection(obj);
+	if (_rec.hasIntersection(obj)) {
+		_alive = false;
+		return true;
+	}
+	else return false;
 }

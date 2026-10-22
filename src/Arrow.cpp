@@ -16,6 +16,8 @@ void Arrow::render() {
 	if (_text != nullptr) {
 		_text->renderFrame(_renderRec.to_sdl(), 0, 0);
 	}
+
+	_game->checkCollision(_colRec);
 }
 
 bool Arrow::update(float delta) {

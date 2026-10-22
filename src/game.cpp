@@ -155,7 +155,10 @@ void Game::handleEvents() {
 }
 
 bool Game::checkCollision(const Rectangle& rect){
-	// TODO
+	for (Balloon* bal : balloons) {
+		if (bal->hit(rect)) return true;
+	}
+
 	return false;
 }
 
