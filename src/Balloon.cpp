@@ -22,11 +22,12 @@ bool Balloon::update(float delta) {
 
 	if (_rec.getTopLeftCorner().getY() < -BALLOON_SIZE) _alive = false;
 
-	return _alive;
+	if (!_alive) _animationState++;
+	return _animationState <= 6;
 }
 
 bool Balloon::hit(const Rectangle& obj) {
-	if (_rec.hasIntersection(obj)) {
+	if (_rec.hasIntersection(obj) && _alive) {
 		_alive = false;
 		return true;
 	}
