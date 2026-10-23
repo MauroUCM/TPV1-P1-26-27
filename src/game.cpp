@@ -1,6 +1,7 @@
 #include "game.h"
 #include <string>
 #include <SDL3_image/SDL_image.h>
+#include <	fstream>
 #include "texture.h"
 #include "Balloon.h"
 #include "Bow.h"
@@ -61,6 +62,8 @@ Game::Game()
 
 	// Configura que se pueden utilizar capas translúcidas
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	
+	loadLevel(1);
 
 	// Inicializa variables
 	rndGenerator = std::mt19937_64(std::random_device()());
@@ -174,4 +177,39 @@ bool Game::checkCollision(const Rectangle& rect){
 
  void Game::addArrow(const Vector2D<float>& pos) {
 	 arrows.push_back(new Arrow(this, pos, getTexture(ARROW), 100.0f));
+ }
+
+ void Game::loadLevel(int level) {
+	// Lectura del archivo
+	try {
+		std::ifstream levelIn;
+		string fileName = (string)LEVEL_ROOT + std::to_string(level) + ".txt",
+			iden;
+		int aux;
+
+		levelIn.open(fileName);
+		if (!levelIn.is_open()) throw "Level file not found.";
+
+		while (true) {
+			levelIn >> iden;
+
+			if (iden == "arrows") {
+
+			}
+			else if (iden == "baldelay") {
+
+			}
+			else if (iden == "bgcolor") {
+
+			}
+			else {
+
+			}
+		}
+
+		levelIn.close();
+	}
+	catch (const char* error) {
+		std::cout << "ERROR: "<< error << " Default settings won't be overriden.\n";
+	}
  }

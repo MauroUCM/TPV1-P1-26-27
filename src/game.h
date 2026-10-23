@@ -53,13 +53,14 @@ private:
 	void handleEvents();
 
 	void addBalloonRnd();
+	void loadLevel(int level);
 	
 	bool exit;
 
 	// Atributos del juego
 	int nArrows = 7;
 	float balDelay = 500;
-	RGBColor bgcolor = RGBColor(44, 168, 94);
+	RGBColor bgcolor = { 44, 168, 94 };
 	
 	// Variables internas
 	std::mt19937_64 rndGenerator;
