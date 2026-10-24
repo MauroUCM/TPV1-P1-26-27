@@ -13,6 +13,7 @@ class Texture;
 class Balloon;
 class Bow;
 class Arrow;
+class InfoBar;
 
 /**
  * Clase principal del juego.
@@ -72,6 +73,7 @@ private:
 	std::vector<Balloon*> balloons;
 	std::vector<Arrow*> arrows;
 	Bow* bow;
+	InfoBar* infobar;
 
 public:
 	Game();

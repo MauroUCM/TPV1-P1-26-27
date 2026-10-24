@@ -1,11 +1,12 @@
 #include "game.h"
 #include <string>
 #include <SDL3_image/SDL_image.h>
-#include <	fstream>
+#include <fstream>
 #include "texture.h"
 #include "Balloon.h"
 #include "Bow.h"
 #include "Arrow.h"
+#include "InfoBar.h"
 
 using namespace std;
 
@@ -77,6 +78,7 @@ Game::Game()
 			WINDOW_HEIGHT / 2),
 		7.0f, 
 		getTexture(BOW));
+	infobar = new InfoBar(this, getTexture(ARROW));
 }
 
 Game::~Game() {
@@ -85,6 +87,7 @@ Game::~Game() {
 	for (Balloon* bal : balloons) delete bal;
 	for (Arrow* arr : arrows) delete arr;
 	delete bow;
+	delete infobar;
 }
 
 void Game::render() const {
@@ -94,6 +97,7 @@ void Game::render() const {
 	for (Balloon* bal : balloons) bal->render();
 	for (Arrow* arr : arrows) arr->render();
 	if(bow) bow->render();
+	if (infobar) infobar->render();
 
 	SDL_RenderPresent(renderer);
 }
