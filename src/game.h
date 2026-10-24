@@ -54,14 +54,16 @@ private:
 	void handleEvents();
 
 	void addBalloonRnd();
-	void loadLevel(int level);
+	void loadFLevel(int level);
+	bool loadNextLevel();
 	
 	bool exit;
 
 	// Atributos del juego
 	int nArrows = 7,
 		balPoints = 1,
-		goal = 10;
+		goal = 10,
+		curLevel = 0;
 	float balDelay = 500;
 	RGBColor bgcolor = { 44, 168, 94 };
 	Uint16 score = 0;

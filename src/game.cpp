@@ -2,6 +2,7 @@
 #include <string>
 #include <SDL3_image/SDL_image.h>
 #include <fstream>
+#include <filesystem>
 #include "texture.h"
 #include "Balloon.h"
 #include "Bow.h"
@@ -44,7 +45,7 @@ Game::Game()
 		throw "window or renderer: "s + SDL_GetError();
 
 	// lectura del archivo
-	loadLevel(1);
+	loadFLevel(1);
 
 	// Carga las texturas al inicio
 	try {
@@ -132,6 +133,9 @@ void Game::update(const float& delta) {
 	if (nArrows <= 0 && arrows.empty()) {
 		exit = true;
 	}
+	else if (score >= goal) {
+		exit = loadNextLevel();
+	}
 
 	lastUpdate = SDL_GetTicks();
 }
@@ -150,7 +154,7 @@ void Game::run() {
 			SDL_Delay(FRAME_PERIOD - elapsedRun);
 		}
 	}
-
+	std::cout << "You got up to the level " << curLevel << "!\n";
 	std::cout << "FINAL SCORE: " << score;
 }
 
@@ -193,11 +197,14 @@ bool Game::checkCollision(const Rectangle& rect){
 	 arrows.push_back(new Arrow(this, pos, getTexture(ARROW), 100.0f));
  }
 
- void Game::loadLevel(int level) {
+ void Game::loadFLevel(int lev) {
+	 curLevel = lev;
+	 score = 0;
+
 	// Lectura del archivo
 	try {
 		std::ifstream levelIn;
-		string fileName = (string)LEVEL_ROOT + std::to_string(level) + ".txt",
+		string fileName = (string)LEVEL_ROOT + std::to_string(lev) + ".txt",
 			key;
 		int aux;
 
@@ -235,10 +242,26 @@ bool Game::checkCollision(const Rectangle& rect){
 	}
 	catch (const char* error) {
 		std::cout << "ERROR: "<< error << " Default settings won't be overriden.\n";
-
-		
 	}
 
 	// se aplica el color de fondo independientemente de si ha sido cambiado
 	SDL_SetRenderDrawColor(renderer, bgcolor.r, bgcolor.g, bgcolor.b, SDL_ALPHA_OPAQUE);
+ }
+
+ bool Game::loadNextLevel() {
+	// limpieza de flechas
+	for (Arrow* arr : arrows) delete arr;
+	arrows.clear();
+
+	if (std::filesystem::exists((string)LEVEL_ROOT + std::to_string(curLevel + 1) + ".txt")) {
+		// carga del segundo nivel
+		curLevel++;
+		loadFLevel(curLevel);
+	}
+	else {
+		std::cout << "There's no levels left!\n";
+		return true;
+	}
+
+	return false;
  }
