@@ -9,7 +9,6 @@ class Arrow
 {
 public:
 	Arrow(Game* game, Vector2D<float> pos, Texture* text, float speed);
-	~Arrow();
 
 	void render();
 	bool update(float delta);

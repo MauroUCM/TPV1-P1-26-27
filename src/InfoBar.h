@@ -3,7 +3,7 @@
 #include "rectangle.h"
 #include "texture.h"
 
-constexpr float ICON_SIZE = 10;
+constexpr float ICON_SIZE = 10.0f;
 
 class InfoBar
 {
@@ -17,6 +17,6 @@ private:
 	Texture* _text;
 	Rectangle _rec;
 
-	const Vector2D<float> _sepDist = {ICON_SIZE * 2, 0.0f};
+	const Vector2D<float> _sepDist = { ICON_SIZE * 2, 0.0f };
 };
 

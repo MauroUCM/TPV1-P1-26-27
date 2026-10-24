@@ -8,10 +8,6 @@ Bow::Bow(Game* game, Vector2D<float> pos, float speed, Texture* text)
 	_vel = Vector2D<float>(0.0f, 0.0f);
 }
 
-Bow::~Bow() {
-
-}
-
 void Bow::render() const {
 	if (_text != nullptr) {
 		if(_armed) _text->renderFrame(_rec.to_sdl(), 0, 0);
@@ -45,7 +41,7 @@ void Bow::handleEvent(const SDL_Event& event) {
 		default:
 			break;
 		}
-	}if (event.type == SDL_EVENT_KEY_UP) {
+	}if (event.type == SDL_EVENT_KEY_UP) {	// detiene el arco cuando no se pulsa nada
 		switch (event.key.key)
 		{
 		case SDLK_DOWN:

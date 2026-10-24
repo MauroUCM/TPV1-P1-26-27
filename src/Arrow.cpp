@@ -8,10 +8,6 @@ Arrow::Arrow(Game* game, Vector2D<float> pos, Texture* text, float speed)
 	_colRec = Rectangle(pos + Vector2D((float)ARROW_SIZE * 4, 0.0f), ARROW_SIZE / 5, ARROW_SIZE / 3);
 }
 
-Arrow::~Arrow() {
-
-}
-
 void Arrow::render() {
 	if (_text != nullptr) {
 		_text->renderFrame(_renderRec.to_sdl(), 0, 0);
@@ -24,6 +20,7 @@ bool Arrow::update(float delta) {
 	_renderRec.move(_vel);
 	_colRec.move(_vel);
 
+	// comprobacion de si sale de la escenea
 	if (_renderRec.getTopLeftCorner().getX() > Game::WINDOW_WIDTH) return false;
 	else return true;
 }

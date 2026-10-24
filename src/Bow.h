@@ -10,7 +10,6 @@ class Bow
 {
 public:
 	Bow(Game* game, Vector2D<float> pos, float speed, Texture* text);
-	~Bow();
 
 	void render() const;
 	bool update(float delta);

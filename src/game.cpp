@@ -43,9 +43,8 @@ Game::Game()
 	                                 0, &window, &renderer))
 		throw "window or renderer: "s + SDL_GetError();
 
+	// lectura del archivo
 	loadLevel(1);
-
-	SDL_SetRenderDrawColor(renderer, bgcolor.r, bgcolor.g, bgcolor.b, SDL_ALPHA_OPAQUE);
 
 	// Carga las texturas al inicio
 	try {
@@ -93,7 +92,6 @@ Game::~Game() {
 void Game::render() const {
 	SDL_RenderClear(renderer);
 
-	// TODO
 	for (Balloon* bal : balloons) bal->render();
 	for (Arrow* arr : arrows) arr->render();
 	if(bow) bow->render();

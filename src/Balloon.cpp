@@ -7,10 +7,6 @@ Balloon::Balloon(Vector2D<float> pos, float vel, Texture* text, int color)
 	_animationState = 0;
 }
 
-Balloon::~Balloon() {
-
-}
-
 void Balloon::render() const {
 	if (_text != nullptr) {
 		_text->renderFrame(_rec.to_sdl(), _color, _animationState);
@@ -26,6 +22,7 @@ bool Balloon::update(float delta) {
 	return _animationState <= 6;
 }
 
+// verifica si hay impacto
 bool Balloon::hit(const Rectangle& obj) {
 	if (_rec.hasIntersection(obj) && _alive) {
 		_alive = false;
