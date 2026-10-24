@@ -61,6 +61,7 @@ private:
 	int nArrows = 7;
 	float balDelay = 500;
 	RGBColor bgcolor = { 44, 168, 94 };
+	Uint16 score = 0;
 	
 	// Variables internas
 	std::mt19937_64 rndGenerator;

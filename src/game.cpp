@@ -42,6 +42,8 @@ Game::Game()
 	                                 0, &window, &renderer))
 		throw "window or renderer: "s + SDL_GetError();
 
+	loadLevel(1);
+
 	SDL_SetRenderDrawColor(renderer, bgcolor.r, bgcolor.g, bgcolor.b, SDL_ALPHA_OPAQUE);
 
 	// Carga las texturas al inicio
@@ -63,9 +65,7 @@ Game::Game()
 	// Configura que se pueden utilizar capas translúcidas
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	
-	loadLevel(1);
-
-	// Inicializa variables
+	// Inicializa variables internas
 	rndGenerator = std::mt19937_64(std::random_device()());
 	lastUpdate = SDL_GetTicks();
 	balElapsed = 0;
@@ -159,7 +159,11 @@ void Game::handleEvents() {
 
 bool Game::checkCollision(const Rectangle& rect){
 	for (Balloon* bal : balloons) {
-		if (bal->hit(rect)) return true;
+		if (bal->hit(rect)) {
+			score += 2;
+			std::cout << "Current score: " << score << "\n";
+			return true;
+		}
 	}
 
 	return false;
@@ -184,30 +188,32 @@ bool Game::checkCollision(const Rectangle& rect){
 	try {
 		std::ifstream levelIn;
 		string fileName = (string)LEVEL_ROOT + std::to_string(level) + ".txt",
-			iden;
+			key;
 		int aux;
 
 		levelIn.open(fileName);
 		if (!levelIn.is_open()) throw "Level file not found.";
 
-		while (true) {
-			levelIn >> iden;
+		while (levelIn) {
+			levelIn >> key;
 
-			if (iden == "arrows") {
-
+			if (key == "arrows") {
+				levelIn >> aux;
+				nArrows = aux;
 			}
-			else if (iden == "baldelay") {
-
+			else if (key == "baldelay") {
+				levelIn >> aux;
+				balDelay = aux;
 			}
-			else if (iden == "bgcolor") {
-
+			else if (key == "bgcolor") {
+				int r, g, b;
+				levelIn >> r >> g >> b;
+				bgcolor = { (Uint8)r, (Uint8)g ,(Uint8)b };
 			}
-			else {
-
+			else {	// descartar linea
+				levelIn.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 			}
 		}
-
-		levelIn.close();
 	}
 	catch (const char* error) {
 		std::cout << "ERROR: "<< error << " Default settings won't be overriden.\n";
