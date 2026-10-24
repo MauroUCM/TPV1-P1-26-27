@@ -76,8 +76,7 @@ Game::Game()
 			WINDOW_WIDTH / 16, 
 			WINDOW_HEIGHT / 2),
 		7.0f, 
-		getTexture(BOW), 
-		nArrows);
+		getTexture(BOW));
 }
 
 Game::~Game() {
@@ -127,11 +126,17 @@ void Game::update(const float& delta) {
 		addBalloonRnd();
 	}
 
+	// comprueba si es el final del juego
+	if (nArrows <= 0 && arrows.empty()) {
+		exit = true;
+	}
+
 	lastUpdate = SDL_GetTicks();
 }
 
 void Game::run() {
-	while (!exit) { // bucle principal del juego
+	// bucle principal del juego
+	while (!exit) { 
 		float currentTime = SDL_GetTicks();
 
 		handleEvents();
@@ -143,6 +148,8 @@ void Game::run() {
 			SDL_Delay(FRAME_PERIOD - elapsedRun);
 		}
 	}
+
+	std::cout << "FINAL SCORE: " << score;
 }
 
 void Game::handleEvents() {
@@ -180,6 +187,7 @@ bool Game::checkCollision(const Rectangle& rect){
  }
 
  void Game::addArrow(const Vector2D<float>& pos) {
+	 nArrows--;
 	 arrows.push_back(new Arrow(this, pos, getTexture(ARROW), 100.0f));
  }
 
@@ -197,15 +205,15 @@ bool Game::checkCollision(const Rectangle& rect){
 		while (levelIn) {
 			levelIn >> key;
 
-			if (key == "arrows") {
+			if (key == "arrows") {			// numero de flechas
 				levelIn >> aux;
 				nArrows = aux;
 			}
-			else if (key == "baldelay") {
+			else if (key == "baldelay") {	// tiempo entre globos
 				levelIn >> aux;
 				balDelay = aux;
 			}
-			else if (key == "bgcolor") {
+			else if (key == "bgcolor") {	// color de fondo
 				int r, g, b;
 				levelIn >> r >> g >> b;
 				bgcolor = { (Uint8)r, (Uint8)g ,(Uint8)b };
@@ -217,5 +225,10 @@ bool Game::checkCollision(const Rectangle& rect){
 	}
 	catch (const char* error) {
 		std::cout << "ERROR: "<< error << " Default settings won't be overriden.\n";
+
+		
 	}
+
+	// se aplica el color de fondo independientemente de si ha sido cambiado
+	SDL_SetRenderDrawColor(renderer, bgcolor.r, bgcolor.g, bgcolor.b, SDL_ALPHA_OPAQUE);
  }

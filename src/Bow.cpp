@@ -1,8 +1,8 @@
 #include "Bow.h"
 #include "game.h"
 
-Bow::Bow(Game* game, Vector2D<float> pos, float speed, Texture* text, int arrows)
-	: _game(game), _speed(speed / 10), _text(text), _arrows(arrows) {
+Bow::Bow(Game* game, Vector2D<float> pos, float speed, Texture* text)
+	: _game(game), _speed(speed / 10), _text(text) {
 	_rec = Rectangle(pos, BOW_SIZE);
 	_armed = false;
 	_vel = Vector2D<float>(0.0f, 0.0f);
@@ -37,7 +37,7 @@ void Bow::handleEvent(const SDL_Event& event) {
 			if (_rec.getTopLeftCorner().getY() > 0) _vel.setY(-_speed);
 			break;
 		case SDLK_LEFT:
-			if(_arrows > 0) _armed = true;
+			if(_game->getArrows() > 0) _armed = true;
 			break;
 		case SDLK_RIGHT:
 			shoot();
@@ -63,7 +63,6 @@ void Bow::handleEvent(const SDL_Event& event) {
 void Bow::shoot() {
 	if (_armed) {
 		_armed = false;
-		_arrows--;
 		_game->addArrow(_rec.getTopLeftCorner() + Vector2D(0.0f, (float)BOW_SIZE / 2));
 	}
 }

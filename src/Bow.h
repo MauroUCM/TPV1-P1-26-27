@@ -9,7 +9,7 @@ constexpr int BOW_SIZE = 100;
 class Bow
 {
 public:
-	Bow(Game* game, Vector2D<float> pos, float speed, Texture* text, int arrows);
+	Bow(Game* game, Vector2D<float> pos, float speed, Texture* text);
 	~Bow();
 
 	void render() const;
@@ -29,6 +29,5 @@ private:
 	Texture* _text;
 
 	bool _armed;
-	int _arrows;
 };
 

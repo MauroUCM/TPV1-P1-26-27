@@ -83,6 +83,9 @@ public:
 	// Obtiene una textura por su nombre
 	Texture* getTexture(TextureName name) const;
 
+	// devuelve el numero de flechas
+	const int& getArrows() { return nArrows; };
+
 	// Ejecuta el bucle principal del juego
 	void run();
 
