@@ -59,7 +59,9 @@ private:
 	bool exit;
 
 	// Atributos del juego
-	int nArrows = 7;
+	int nArrows = 7,
+		balPoints = 1,
+		goal = 10;
 	float balDelay = 500;
 	RGBColor bgcolor = { 44, 168, 94 };
 	Uint16 score = 0;

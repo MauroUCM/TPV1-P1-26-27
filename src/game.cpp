@@ -57,7 +57,7 @@ Game::Game()
 		}
 	}
 	catch (...) {
-		// TODO: liberar la memoria reservada
+		// libera la memoria reservada
 		for (Texture* tex : textures) delete tex;
 		throw; // relanza la excepción
 	}
@@ -169,7 +169,7 @@ void Game::handleEvents() {
 bool Game::checkCollision(const Rectangle& rect){
 	for (Balloon* bal : balloons) {
 		if (bal->hit(rect)) {
-			score += 2;
+			score += balPoints;
 			std::cout << "Current score: " << score << "\n";
 			return true;
 		}
@@ -219,6 +219,14 @@ bool Game::checkCollision(const Rectangle& rect){
 				int r, g, b;
 				levelIn >> r >> g >> b;
 				bgcolor = { (Uint8)r, (Uint8)g ,(Uint8)b };
+			}
+			else if (key == "balpoints") {	// puntos por globo
+				levelIn >> aux;
+				balPoints = aux;
+			}
+			else if (key == "goal") {		// meta de puntos
+				levelIn >> aux;
+				goal = aux;
 			}
 			else {	// descartar linea
 				levelIn.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
