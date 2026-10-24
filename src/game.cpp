@@ -101,7 +101,7 @@ void Game::render() const {
 	SDL_RenderPresent(renderer);
 }
 
-void Game::update(const float& delta) {
+void Game::update(const float delta) {
 	if(bow) bow->update(delta);
 
 	// flechas

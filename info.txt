@@ -1,1 +1,6 @@
 Mauro Martínez Montes
+
+Opcionales hechos:
+- Infobar
+- Ampliacion de opciones de configuración
+- Carga de multiples niveles

@@ -35,7 +35,7 @@ public:
 	Vector2D operator+=(const Vector2D& otro) {
 		return { x += otro.x, y += otro.y };
 	}
-	Vector2D operator*(const float& otro) const {
+	Vector2D operator*(const float otro) const {
 		return { x * otro, y * otro };
 	}
 	float operator*(const Vector2D& otro) const {

@@ -50,7 +50,7 @@ private:
 	std::array<Texture*, NUM_TEXTURES> textures;
 
 	void render() const;
-	void update(const float& delta);
+	void update(const float delta);
 	void handleEvents();
 
 	void addBalloonRnd();
@@ -89,8 +89,8 @@ public:
 	// Obtiene una textura por su nombre
 	Texture* getTexture(TextureName name) const;
 
-	// devuelve el numero de flechas
-	const int& getArrows() { return nArrows; };
+	// devuelve el numero de flechas restantes
+	const int& getArrows() const { return nArrows; };
 
 	// Ejecuta el bucle principal del juego
 	void run();
