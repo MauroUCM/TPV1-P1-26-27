@@ -28,6 +28,8 @@ public:
 	// Tamaño real de la ventana
 	static constexpr int WINDOW_WIDTH = 800;
 	static constexpr int WINDOW_HEIGHT = 600;
+	// Numero por el que son mulitplicadas todas las velocidades
+	static constexpr float SPEED_RATIO = 0.1f;
 
 	enum TextureName
 	{

@@ -2,7 +2,7 @@
 #include "game.h"
 
 Bow::Bow(Game* game, Vector2D<float> pos, float speed, Texture* text)
-	: _game(game), _speed(speed / 10), _text(text) {
+	: _game(game), _speed(speed * Game::SPEED_RATIO), _text(text) {
 	_rec = Rectangle(pos, BOW_SIZE);
 	_armed = false;
 	_vel = Vector2D<float>(0.0f, 0.0f);
@@ -16,6 +16,15 @@ void Bow::render() const {
 }
 
 bool Bow::update(float delta) {
+	if (_rec.getTopLeftCorner().getY() < 0) {
+		_vel = Vector2D<float>(0.0f, 0.0f);
+		_rec.moveToY(0.0f);
+	}
+	else if (_rec.getTopLeftCorner().getY() > Game::WINDOW_HEIGHT - BOW_SIZE) {
+		_vel = Vector2D<float>(0.0f, 0.0f);
+		_rec.moveToY(Game::WINDOW_HEIGHT - BOW_SIZE);
+	}
+
 	_rec.move(_vel * delta);
 
 	return true;

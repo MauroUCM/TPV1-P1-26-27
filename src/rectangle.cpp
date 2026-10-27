@@ -121,4 +121,14 @@ Rectangle::to_sdl() const
 	};
 }
 
+void 
+Rectangle::moveToX(float x) {
+	corner.setX(x);
+}
+
+void 
+Rectangle::moveToY(float y) {
+	corner.setY(y);
+}
+
 #endif

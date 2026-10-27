@@ -70,6 +70,11 @@ public:
 	void move(Vector2D<> v);
 	/// Mueve el rectángulo a la posición del vector
 	void moveTo(Vector2D<> v);
+	/// Mueve el eje X a la posición provista
+	void moveToX(float x);
+	/// Mueve el eje Y a la posición provista
+	void moveToY(float y);
+
 
 // Conexión con la SDL
 #ifdef WITH_SDL
