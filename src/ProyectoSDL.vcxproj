@@ -101,10 +101,12 @@
     <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="Butterfly.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InfoBar.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MobileObject.cpp" />
     <ClCompile Include="rectangle.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -113,9 +115,11 @@
     <ClInclude Include="Arrow.h" />
     <ClInclude Include="Balloon.h" />
     <ClInclude Include="Bow.h" />
+    <ClInclude Include="Butterfly.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InfoBar.h" />
+    <ClInclude Include="MobileObject.h" />
     <ClInclude Include="rectangle.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="texture.h" />
