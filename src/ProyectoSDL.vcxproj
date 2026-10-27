@@ -102,9 +102,11 @@
     <ClCompile Include="Balloon.cpp" />
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InfoBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rectangle.cpp" />
+    <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -112,8 +114,10 @@
     <ClInclude Include="Balloon.h" />
     <ClInclude Include="Bow.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="InfoBar.h" />
     <ClInclude Include="rectangle.h" />
+    <ClInclude Include="SceneObject.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="vector2D.h" />
   </ItemGroup>
