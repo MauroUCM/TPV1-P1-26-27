@@ -10,7 +10,7 @@ public:
 	~SceneObject();
 
 	virtual void render() const override = 0;
-	virtual void update() override = 0;
+	virtual bool update(float delta) override = 0;
 
 	bool hit(const Rectangle&);
 

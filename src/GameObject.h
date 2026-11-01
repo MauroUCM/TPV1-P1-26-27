@@ -8,7 +8,7 @@ public:
 	GameObject(Game* gm);
 
 	virtual void render() const = 0;
-	virtual void update() = 0;
+	virtual bool update(float delta) = 0;
 
 protected:
 	Game* _gm;

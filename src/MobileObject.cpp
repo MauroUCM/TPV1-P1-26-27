@@ -4,3 +4,9 @@ MobileObject::MobileObject(Game* gm, Texture* text, Rectangle* rec, Vector2D<flo
 : SceneObject(gm, text, rec), _vel(vel) {
 
 }
+
+bool MobileObject::update(float delta) {
+	_rec->move(_vel * delta);
+
+	return true;
+}
