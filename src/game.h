@@ -14,6 +14,7 @@ class Balloon;
 class Bow;
 class Arrow;
 class InfoBar;
+class SceneObject;
 
 /**
  * Clase principal del juego.
