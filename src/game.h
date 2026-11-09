@@ -6,14 +6,15 @@
 #include <istream>
 #include <vector>
 #include <random>
+#include <list>
 #include "rectangle.h"
 
 // Declaraciones anticipadas
 class Texture;
-class Balloon;
-class Bow;
-class Arrow;
-class InfoBar;
+//class Balloon;
+//class Bow;
+//class Arrow;
+//class InfoBar;
 class SceneObject;
 
 /**
@@ -76,11 +77,14 @@ private:
 	float lastUpdate;
 	float balElapsed;
 
-	// Elemento del juego
-	std::vector<Balloon*> balloons;
-	std::vector<Arrow*> arrows;
-	Bow* bow;
-	InfoBar* infobar;
+	// Elementos del juego
+	std::list<SceneObject*> _objs;
+
+	// Elementos del juego
+	//std::vector<Balloon*> balloons;
+	//std::vector<Arrow*> arrows;
+	//Bow* bow;
+	//InfoBar* infobar;
 
 public:
 	Game();
