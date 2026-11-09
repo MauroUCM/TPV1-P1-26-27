@@ -85,6 +85,7 @@ Game::Game()
 Game::~Game() {
 	// Liberacion de la memoria reservada
 	for (Texture* tex : textures) delete tex;
+	for (GameObject* go : _objs) delete go;
 	//for (Balloon* bal : balloons) delete bal;
 	//for (Arrow* arr : arrows) delete arr;
 	//delete bow;
@@ -128,12 +129,12 @@ void Game::update(const float delta) {
 	//	}
 	//}
 
-	//// generación de globos
-	//balElapsed += delta;
-	//if (balElapsed >= balDelay) {
-	//	balElapsed = 0;
-	//	addBalloonRnd();
-	//}
+	// generación de globos
+	balElapsed += delta;
+	if (balElapsed >= balDelay) {
+		balElapsed = 0;
+		addRndBalloon();
+	}
 
 	//// comprueba si es el final del juego
 	//if (nArrows <= 0 && arrows.empty()) {
@@ -188,14 +189,15 @@ bool Game::checkCollision(const Rectangle& rect){
 	return false;
 }
 
- void Game::addBalloonRnd() {
-	 //balloons.push_back(new Balloon(
-		// Vector2D(
-		//	 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
-		//	 (float)WINDOW_HEIGHT), 
-		// -(float)uniform_int_distribution<int>(1, 5)(rndGenerator),
-		// getTexture(BALLOONS), 
-		// uniform_int_distribution<int>(0,6)(rndGenerator)));
+ void Game::addRndBalloon() {
+	 _objs.push_back(new Balloon(
+		 this,
+		 Vector2D(
+			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
+			 (float)WINDOW_HEIGHT), 
+		 -(float)uniform_int_distribution<int>(1, 5)(rndGenerator),
+		 getTexture(BALLOONS), 
+		 uniform_int_distribution<int>(0,6)(rndGenerator)));
  }
 
  void Game::addArrow(const Vector2D<float>& pos) {

@@ -1,28 +1,24 @@
 #pragma once
-#include "rectangle.h"
 #include "vector2D.h"
-#include "texture.h"
+#include "MobileObject.h"
 
 constexpr int BALLOON_SIZE = 150;
 
-class Balloon
+class Balloon : public MobileObject
 {
 public:
-	Balloon(Vector2D<float> pos, float vel, Texture* text, int color = 0);
+	Balloon(Game* gm, Vector2D<float> pos, float vel, Texture* text, int color = 0);
 
-	void render() const;
-	bool update(float delta);
+	void render() const override;
+	bool update(float delta) override;
 
 	bool hit(const Rectangle& obj);
 
 private:
-	Vector2D<float> _pos;
-	Vector2D<float> _vel;
-
-	Rectangle _rec;
-	Texture* _text;
-
+	// variables
 	int _color;
+
+	// variables internas
 	int _animationState;
 	bool _alive = true;
 };

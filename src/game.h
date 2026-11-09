@@ -57,7 +57,7 @@ private:
 	void update(const float delta);
 	void handleEvents();
 
-	void addBalloonRnd();
+	void addRndBalloon();
 	void loadFLevel(int level);
 	bool loadNextLevel();
 	
