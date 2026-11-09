@@ -86,6 +86,9 @@ Game::~Game() {
 	// Liberacion de la memoria reservada
 	for (Texture* tex : textures) delete tex;
 	for (GameObject* go : _objs) delete go;
+
+	// Liberacion de la memoria reservada
+	//for (Texture* tex : textures) delete tex;
 	//for (Balloon* bal : balloons) delete bal;
 	//for (Arrow* arr : arrows) delete arr;
 	//delete bow;
@@ -106,8 +109,12 @@ void Game::render() const {
 }
 
 void Game::update(const float delta) {
-	
-	for (SceneObject* updt : _objs) updt->update(delta);
+
+	for (SceneObject* updt : _objs) {
+		if (!updt->update(delta)) {
+			/*_objs.erase();*/
+		}
+	}
 
 	//if(bow) bow->update(delta);
 

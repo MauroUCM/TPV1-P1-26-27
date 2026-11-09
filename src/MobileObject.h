@@ -5,6 +5,7 @@ class MobileObject : public SceneObject
 {
 public:
 	MobileObject(Game* gm, Texture* text, Rectangle* rec, Vector2D<float> vel);
+	virtual ~MobileObject() {};
 
 	virtual void render() const override = 0;
 	bool update(float delta) override;
