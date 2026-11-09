@@ -110,10 +110,12 @@ void Game::render() const {
 
 void Game::update(const float delta) {
 
-	for (SceneObject* updt : _objs) {
-		if (!updt->update(delta)) {
-			/*_objs.erase();*/
+	for (auto updt = _objs.begin(); updt != _objs.end(); ) {
+		if (!(*updt)->update(delta)) {
+			delete* updt;
+			updt = _objs.erase(updt);
 		}
+		else updt++;
 	}
 
 	//if(bow) bow->update(delta);
@@ -143,13 +145,13 @@ void Game::update(const float delta) {
 		addRndBalloon();
 	}
 
-	//// comprueba si es el final del juego
-	//if (nArrows <= 0 && arrows.empty()) {
-	//	exit = true;
-	//}
-	//else if (score >= goal) {
-	//	exit = loadNextLevel();
-	//}
+	// comprueba si es el final del juego
+	if (nArrows <= 0 /*&& arrows.empty()*/) {
+		exit = true;
+	}
+	else if (score >= goal) {
+		exit = loadNextLevel();
+	}
 
 	lastUpdate = SDL_GetTicks();
 }
