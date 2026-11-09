@@ -103,7 +103,6 @@
     <ClCompile Include="Bow.cpp" />
     <ClCompile Include="Butterfly.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InfoBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MobileObject.cpp" />
