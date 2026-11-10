@@ -81,31 +81,19 @@ Game::Game()
 		getTexture(BOW));
 	_objs.push_back(bow);
 
-	//infobar = new InfoBar(this, getTexture(ARROW));
+	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
 }
 
 Game::~Game() {
 	// Liberacion de la memoria reservada
 	for (Texture* tex : textures) delete tex;
 	for (GameObject* go : _objs) delete go;
-
-	// Liberacion de la memoria reservada
-	//for (Texture* tex : textures) delete tex;
-	//for (Balloon* bal : balloons) delete bal;
-	//for (Arrow* arr : arrows) delete arr;
-	//delete bow;
-	//delete infobar;
 }
 
 void Game::render() const {
 	SDL_RenderClear(renderer);
 
 	for (SceneObject* rend : _objs) rend->render();
-
-	//for (Balloon* bal : balloons) bal->render();
-	//for (Arrow* arr : arrows) arr->render();
-	//if(bow) bow->render();
-	//if (infobar) infobar->render();
 
 	SDL_RenderPresent(renderer);
 }
@@ -118,26 +106,6 @@ void Game::update(const float delta) {
 		}
 		else updt++;
 	}
-
-	//if(bow) bow->update(delta);
-
-	//// flechas
-	//for (int i = 0; i < arrows.size(); i++) {
-	//	if (!arrows[i]->update(delta)) {
-	//		delete arrows[i];
-	//		arrows.erase(arrows.begin() + i);
-	//		i--;
-	//	}
-	//}
-
-	//// globos
-	//for (int i = 0; i < balloons.size(); i++) {
-	//	if (!balloons[i]->update(delta)) {
-	//		delete balloons[i];
-	//		balloons.erase(balloons.begin() + i);			
-	//		i--;
-	//	}
-	//}
 
 	// generación de globos
 	balElapsed += delta;
@@ -200,19 +168,21 @@ bool Game::checkCollision(const Rectangle& rect){
 }
 
  void Game::addRndBalloon() {
-	 _objs.push_back(new Balloon(
+	 Balloon* bal = new Balloon(
 		 this,
 		 Vector2D(
 			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
-			 (float)WINDOW_HEIGHT), 
+			 (float)WINDOW_HEIGHT),
 		 -(float)uniform_int_distribution<int>(1, 5)(rndGenerator),
-		 getTexture(BALLOONS), 
-		 uniform_int_distribution<int>(0,6)(rndGenerator)));
+		 getTexture(BALLOONS),
+		 uniform_int_distribution<int>(0, 6)(rndGenerator));
+
+		 _objs.push_back(bal);
  }
 
  void Game::addArrow(const Vector2D<float>& pos) {
 	 nArrows--;
-	 //arrows.push_back(new Arrow(this, pos, getTexture(ARROW), 100.0f));
+	 _objs.push_back(new Arrow(this, pos, getTexture(ARROW), 10.0f));
  }
 
  void Game::loadFLevel(int lev) {
@@ -267,10 +237,6 @@ bool Game::checkCollision(const Rectangle& rect){
  }
 
  bool Game::loadNextLevel() {
-	// limpieza de flechas
-	//for (Arrow* arr : arrows) delete arr;
-	//arrows.clear();
-
 	if (std::filesystem::exists((string)LEVEL_ROOT + std::to_string(curLevel + 1) + ".txt")) {
 		// carga del segundo nivel
 		curLevel++;

@@ -1,26 +1,24 @@
 #include "Arrow.h"
 
 Arrow::Arrow(Game* game, Vector2D<float> pos, Texture* text, float speed) 
-: _game(game), _text(text) {
-	_renderRec = Rectangle(pos, ARROW_SIZE * 5, ARROW_SIZE);
-	_vel = Vector2D(speed * Game::SPEED_RATIO, 0.0f);
-
+: MobileObject(game, text, new Rectangle(pos, ARROW_SIZE * 5, ARROW_SIZE), Vector2D(speed * Game::SPEED_RATIO, 0.0f)) {
 	_colRec = Rectangle(pos + Vector2D((float)ARROW_SIZE * 4, 0.0f), ARROW_SIZE / 5, ARROW_SIZE / 3);
 }
 
-void Arrow::render() {
+void Arrow::render() const {
 	if (_text != nullptr) {
-		_text->renderFrame(_renderRec.to_sdl(), 0, 0);
+		_text->renderFrame(_rec->to_sdl(), 0, 0);
 	}
 }
 
 bool Arrow::update(float delta) {
-	_renderRec.move(_vel);
+	MobileObject::update(delta);
+
 	_colRec.move(_vel);
-	_game->checkCollision(_colRec);
+	_gm->checkCollision(_colRec);
 
 	// comprobacion de si sale de la escenea
-	if (_renderRec.getTopLeftCorner().getX() > Game::WINDOW_WIDTH) return false;
+	if (_rec->getTopLeftCorner().getX() > Game::WINDOW_WIDTH) return false;
 	else return true;
 }
 
