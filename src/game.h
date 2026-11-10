@@ -12,7 +12,7 @@
 // Declaraciones anticipadas
 class Texture;
 //class Balloon;
-//class Bow;
+class Bow;
 //class Arrow;
 //class InfoBar;
 class SceneObject;
@@ -79,11 +79,12 @@ private:
 
 	// Elementos del juego
 	std::list<SceneObject*> _objs;
+	Bow* bow;
+
 
 	// Elementos del juego
 	//std::vector<Balloon*> balloons;
 	//std::vector<Arrow*> arrows;
-	//Bow* bow;
 	//InfoBar* infobar;
 
 public:

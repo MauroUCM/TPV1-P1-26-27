@@ -73,12 +73,14 @@ Game::Game()
 	balElapsed = 0;
 
 	// Crea los objetos del juego
-	//bow = new Bow(this,
-	//	Vector2D<float>(
-	//		WINDOW_WIDTH / 16, 
-	//		WINDOW_HEIGHT / 2),
-	//	7.0f, 
-	//	getTexture(BOW));
+	bow = new Bow(this,
+		Vector2D<float>(
+			WINDOW_WIDTH / 16, 
+			WINDOW_HEIGHT / 2),
+		7.0f, 
+		getTexture(BOW));
+	_objs.push_back(bow);
+
 	//infobar = new InfoBar(this, getTexture(ARROW));
 }
 
@@ -109,7 +111,6 @@ void Game::render() const {
 }
 
 void Game::update(const float delta) {
-
 	for (auto updt = _objs.begin(); updt != _objs.end(); ) {
 		if (!(*updt)->update(delta)) {
 			delete* updt;
@@ -182,7 +183,7 @@ void Game::handleEvents() {
 		if (event.type == SDL_EVENT_QUIT)
 			exit = true;
 
-		//bow->handleEvent(event);
+		bow->handleEvent(event);
 	}
 }
 
@@ -210,7 +211,7 @@ bool Game::checkCollision(const Rectangle& rect){
  }
 
  void Game::addArrow(const Vector2D<float>& pos) {
-	 //nArrows--;
+	 nArrows--;
 	 //arrows.push_back(new Arrow(this, pos, getTexture(ARROW), 100.0f));
  }
 

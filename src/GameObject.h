@@ -10,7 +10,7 @@ public:
 	virtual bool update(float delta) = 0;
 
 protected:
-	GameObject(Game* gm) {};
+	GameObject(Game* gm) : _gm(gm) {};
 
 	Game* _gm;
 };
