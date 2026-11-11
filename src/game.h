@@ -74,6 +74,7 @@ private:
 	std::mt19937_64 rndGenerator;
 	float lastUpdate;
 	float balElapsed;
+	int unclosableObjs; // cuenta el numero de objetos que tienen que destruirse antes de terminar la partida
 
 	// Elementos del juego
 	std::list<SceneObject*> _objs;
@@ -105,6 +106,9 @@ public:
 
 	// Ejecuta el bucle principal del juego
 	void run();
+
+	// suma 'num' a unclosableObjs
+	void addUnclosable(int num) { unclosableObjs += num; };
 
 	// Comprueba si hay algún objeto colocado en ese rectángulo
 	bool checkCollision(const Rectangle& rect);

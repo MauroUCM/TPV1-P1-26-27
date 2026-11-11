@@ -71,6 +71,7 @@ Game::Game()
 	rndGenerator = std::mt19937_64(std::random_device()());
 	lastUpdate = SDL_GetTicks();
 	balElapsed = 0;
+	unclosableObjs = 0;
 
 	// Crea los objetos del juego
 	bow = new Bow(this,
@@ -115,7 +116,7 @@ void Game::update(const float delta) {
 	}
 
 	// comprueba si es el final del juego
-	if (nArrows <= 0 /*&& arrows.empty()*/) {
+	if (nArrows <= 0 && unclosableObjs <= 0) {
 		exit = true;
 	}
 	else if (score >= goal) {

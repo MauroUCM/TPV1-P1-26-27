@@ -7,6 +7,7 @@ class Arrow : public MobileObject
 {
 public:
 	Arrow(Game* game, Vector2D<float> pos, Texture* text, float speed);
+	~Arrow();
 
 	void render() const override;
 	bool update(float delta) override ;
