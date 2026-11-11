@@ -14,8 +14,11 @@ void Arrow::render() const {
 bool Arrow::update(float delta) {
 	MobileObject::update(delta);
 
-	_colRec.move(_vel);
-	_gm->checkCollision(_colRec);
+	_colRec.move(_vel * delta);
+	if (_gm->checkCollision(_colRec)) {
+		_gm->addScore(_gm->getBalPoints(), scoreMult);
+		scoreMult++;
+	}
 
 	// comprobacion de si sale de la escenea
 	if (_rec->getTopLeftCorner().getX() > Game::WINDOW_WIDTH) return false;

@@ -10,8 +10,5 @@ SceneObject::~SceneObject() {
 }
 
 bool SceneObject::hit(const Rectangle& rec) {
-	if (_rec->hasIntersection(rec)) {
-		return true;
-	}
-	else return false;
+	return false;
 }

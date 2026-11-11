@@ -13,5 +13,7 @@ public:
 
 private:
 	Rectangle _colRec;
+
+	int scoreMult = 1;
 };
 

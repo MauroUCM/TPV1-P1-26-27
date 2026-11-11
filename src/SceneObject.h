@@ -12,7 +12,8 @@ public:
 	virtual void render() const override = 0;
 	virtual bool update(float delta) override = 0;
 
-	bool hit(const Rectangle&);
+	// de normal devuelve false, cada objeto debe configurarlo en su clase
+	virtual bool hit(const Rectangle&);
 
 protected:
 	Rectangle* _rec;

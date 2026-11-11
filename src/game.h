@@ -97,6 +97,12 @@ public:
 	// devuelve el numero de flechas restantes
 	const int& getArrows() const { return nArrows; };
 
+	// añade base * mult a la puntuacion
+	void addScore(int base, int mult);
+
+	// devuelve el valor en puntos de los globos
+	int getBalPoints() { return balPoints; };
+
 	// Ejecuta el bucle principal del juego
 	void run();
 

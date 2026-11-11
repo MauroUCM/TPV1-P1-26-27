@@ -156,13 +156,11 @@ void Game::handleEvents() {
 }
 
 bool Game::checkCollision(const Rectangle& rect){
-	//for (Balloon* bal : balloons) {
-	//	if (bal->hit(rect)) {
-	//		score += balPoints;
-	//		std::cout << "Current score: " << score << "\n";
-	//		return true;
-	//	}
-	//}
+	for (auto* col : _objs) {
+		if (col->hit(rect)) {
+			return true;
+		}
+	}
 
 	return false;
 }
@@ -248,4 +246,9 @@ bool Game::checkCollision(const Rectangle& rect){
 	}
 
 	return false;
+ }
+
+ void Game::addScore(int base, int mult) {
+	 score += base * mult;
+	 std::cout << "Current score: " << score << "\n";
  }
