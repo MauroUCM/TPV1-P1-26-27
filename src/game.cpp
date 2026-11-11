@@ -30,7 +30,8 @@ constexpr array<TextureSpec, Game::NUM_TEXTURES> textureList{
 	TextureSpec{"bow.png", 1, 2},
 	TextureSpec{"arrow.png"},
 	TextureSpec{"balloons.png", 7 , 6},
-	TextureSpec{"rewards.png", 8, 10},
+	TextureSpec{"rewards.png", 8, 10},	
+	TextureSpec{"butterfly.png", 4, 10},
 };
 
 Game::Game()

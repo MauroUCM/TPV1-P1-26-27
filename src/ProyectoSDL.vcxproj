@@ -120,9 +120,13 @@
     <ClInclude Include="InfoBar.h" />
     <ClInclude Include="MobileObject.h" />
     <ClInclude Include="rectangle.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="vector2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TPV1 P1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
