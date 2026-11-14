@@ -9,6 +9,7 @@
 #include "Arrow.h"
 #include "InfoBar.h"
 #include "SceneObject.h"
+#include "Butterfly.h"
 
 using namespace std;
 
@@ -72,7 +73,7 @@ Game::Game()
 	rndGenerator = std::mt19937_64(std::random_device()());
 	lastUpdate = SDL_GetTicks();
 	balElapsed = 0;
-	unclosableObjs = 0;
+	mustDelBfr = 0;
 
 	// Crea los objetos del juego
 	bow = new Bow(this,
@@ -84,6 +85,9 @@ Game::Game()
 	_objs.push_back(bow);
 
 	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
+
+	_objs.push_back(new Butterfly(this, getTexture(BUTTERFLY)));
+
 }
 
 Game::~Game() {
@@ -117,7 +121,7 @@ void Game::update(const float delta) {
 	}
 
 	// comprueba si es el final del juego
-	if (nArrows <= 0 && unclosableObjs <= 0) {
+	if (nArrows <= 0 && mustDelBfr <= 0) {
 		exit = true;
 	}
 	else if (score >= goal) {
@@ -142,7 +146,7 @@ void Game::run() {
 		}
 	}
 	std::cout << "You got up to the level " << curLevel << "!\n";
-	std::cout << "FINAL SCORE: " << score;
+	std::cout << "FINAL TOTAL SCORE: " << totalScore + score;
 }
 
 void Game::handleEvents() {
@@ -182,11 +186,12 @@ bool Game::checkCollision(const Rectangle& rect){
 
  void Game::addArrow(const Vector2D<float>& pos) {
 	 nArrows--;
-	 _objs.push_back(new Arrow(this, pos, getTexture(ARROW), 10.0f));
+	 _objs.push_back(new Arrow(this, pos, getTexture(ARROW), DEFAULT_ARROW_SPEED));
  }
 
  void Game::loadFLevel(int lev) {
 	 curLevel = lev;
+	 totalScore += score;
 	 score = 0;
 
 	// Lectura del archivo
@@ -253,4 +258,8 @@ bool Game::checkCollision(const Rectangle& rect){
  void Game::addScore(int base, int mult) {
 	 score += base * mult;
 	 std::cout << "Current score: " << score << "\n";
+ }
+
+ int Game::generateRndInt(int min, int max) {
+	 return uniform_int_distribution<int>(min, max)(rndGenerator);
  }

@@ -18,7 +18,7 @@ private:
 	int _color;
 
 	// variables internas
-	int _animationState;
+	int _animationState = 0;
 	bool _alive = true;
 };
 

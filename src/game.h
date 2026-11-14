@@ -30,6 +30,8 @@ public:
 	static constexpr int WINDOW_HEIGHT = 600;
 	// Numero por el que son mulitplicadas todas las velocidades
 	static constexpr float SPEED_RATIO = 0.1f;
+	// Velocidad de las flechas
+	static constexpr float DEFAULT_ARROW_SPEED = 10.0f;
 
 	enum TextureName
 	{
@@ -70,12 +72,13 @@ private:
 	float balDelay = 500;
 	RGBColor bgcolor = { 44, 168, 94 };
 	Uint16 score = 0;
+	Uint16 totalScore = 0;
 	
 	// Variables internas
 	std::mt19937_64 rndGenerator;
 	float lastUpdate;
 	float balElapsed;
-	int unclosableObjs; // cuenta el numero de objetos que tienen que destruirse antes de terminar la partida
+	int mustDelBfr; // cuenta el numero de objetos que tienen que destruirse antes de terminar la partida
 
 	// Elementos del juego
 	std::list<SceneObject*> _objs;
@@ -109,10 +112,13 @@ public:
 	void run();
 
 	// suma 'num' a unclosableObjs
-	void addUnclosable(int num) { unclosableObjs += num; };
+	void addUnclosable(int num) { mustDelBfr += num; };
 
 	// Comprueba si hay algún objeto colocado en ese rectángulo
 	bool checkCollision(const Rectangle& rect);
+
+	// Genera un int aleatorio
+	int generateRndInt(int min, int max);
 };
 
 inline Texture*

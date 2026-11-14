@@ -1,10 +1,13 @@
 #pragma once
 #include "MobileObject.h"
 
-constexpr int BUTTERFLY_SIZE = 20;
+constexpr float BTF_SIZE = 50.0f;
+constexpr float BTF_DEAD_SPEED = 50.0f;
+constexpr int BTF_MAX_SPEED = 50.0f;
+constexpr int BTF_MIN_SPEED = 5.0f;
 
 enum BtflyAnimnState {
-	MOVING_LEFT = 1,
+	MOVING_LEFT = 0,
 	MOVING_RIGHT,
 	TURNING_LEFT,
 	TURNING_RIGHT
@@ -17,11 +20,14 @@ public:
 
 	void render() const override;
 	bool update(float delta) override;
+	bool hit(const Rectangle& obj) override;
 
 private:
-	void changeSpeedRnd();
+	void changeDirRnd();
 
-	BtflyAnimnState animState;
-	int animFrame = 0;
+	BtflyAnimnState _animState = MOVING_LEFT;
+	float _speed;
+	int _animFrame = 0;
+	bool _alive = true;
 
 };
