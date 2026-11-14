@@ -25,6 +25,8 @@ public:
 	static constexpr int FRAME_RATE = 30;
 	// Periodo entre actualizaciones en milisegundos
 	static constexpr int FRAME_PERIOD = 1000 / FRAME_RATE;
+	// Periodo entre frames de animacion en milisegundos
+	static constexpr int ANIM_FRAMES_RATE = FRAME_PERIOD * 2;
 	// Tamaño real de la ventana
 	static constexpr int WINDOW_WIDTH = 800;
 	static constexpr int WINDOW_HEIGHT = 600;

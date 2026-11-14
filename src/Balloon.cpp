@@ -1,7 +1,7 @@
 #include "Balloon.h"
 
 Balloon::Balloon(Game* gm, Vector2D<float> pos, float vel, Texture* text, int color)
-	: MobileObject(gm, text, new Rectangle(pos, BALLOON_SIZE), Vector2D(0.0f, 1.0f)* (vel * Game::SPEED_RATIO)), 
+	: MobileObject(gm, text, new Rectangle(pos, BALLOON_SIZE), Vector2D(0.0f, 1.0f) * (vel * Game::SPEED_RATIO)), 
 	_color(color) {
 
 }
@@ -14,10 +14,16 @@ void Balloon::render() const {
 
 bool Balloon::update(float delta) {
 	MobileObject::update(delta);
+	_timeSncLastFrame += delta;
 
 	if (_rec->getTopLeftCorner().getY() < -BALLOON_SIZE) _alive = false;
 
-	if (!_alive) _animationState++;
+	// animacion (la de morir mas que nada)
+	if (!_alive && _timeSncLastFrame >= Game::ANIM_FRAMES_RATE) {
+		_animationState++;
+		_timeSncLastFrame = 0;
+	}
+
 	return _animationState <= 6;
 }
 

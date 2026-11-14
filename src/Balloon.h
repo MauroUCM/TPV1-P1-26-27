@@ -20,5 +20,6 @@ private:
 	// variables internas
 	int _animationState = 0;
 	bool _alive = true;
+	int _timeSncLastFrame = 0;
 };
 

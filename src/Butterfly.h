@@ -27,7 +27,10 @@ private:
 
 	BtflyAnimnState _animState = MOVING_LEFT;
 	float _speed;
+
 	int _animFrame = 0;
 	bool _alive = true;
+	int _timeSncLastFrame = 0;
+
 
 };

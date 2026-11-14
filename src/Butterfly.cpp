@@ -15,10 +15,19 @@ void Butterfly::render() const {
 
 bool Butterfly::update(float delta) {
 	MobileObject::update(delta);
+	_timeSncLastFrame += delta;
 
 	if (_alive) {
 
+		// animacion
+		if (_timeSncLastFrame >= Game::ANIM_FRAMES_RATE) {
+			_animFrame++;
+			_timeSncLastFrame = 0;
+			if (_animFrame >= _text->getNumColumns()) _animFrame = 0;
+		}
 	}
+
+
 
 	return _rec->getTopLeftCorner().getY() < Game::WINDOW_HEIGHT;
 }

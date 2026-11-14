@@ -31,7 +31,7 @@ constexpr array<TextureSpec, Game::NUM_TEXTURES> textureList{
 	TextureSpec{"bow.png", 1, 2},
 	TextureSpec{"arrow.png"},
 	TextureSpec{"balloons.png", 7 , 6},
-	TextureSpec{"rewards.png", 8, 10},	
+	TextureSpec{"rewards.png", 10, 8},	
 	TextureSpec{"butterfly.png", 4, 10},
 };
 
@@ -145,7 +145,7 @@ void Game::run() {
 			SDL_Delay(FRAME_PERIOD - elapsedRun);
 		}
 	}
-	std::cout << "You got up to the level " << curLevel << "!\n";
+	std::cout << "You got up to level " << curLevel << "!\n";
 	std::cout << "FINAL TOTAL SCORE: " << totalScore + score;
 }
 
