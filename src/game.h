@@ -61,6 +61,7 @@ private:
 	void handleEvents();
 
 	void addRndBalloon();
+	void addRndButterfly();
 	void loadFLevel(int level);
 	bool loadNextLevel();
 	

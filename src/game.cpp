@@ -86,8 +86,7 @@ Game::Game()
 
 	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
 
-	_objs.push_back(new Butterfly(this, getTexture(BUTTERFLY)));
-
+	addRndButterfly();
 }
 
 Game::~Game() {
@@ -172,16 +171,23 @@ bool Game::checkCollision(const Rectangle& rect){
 }
 
  void Game::addRndBalloon() {
-	 Balloon* bal = new Balloon(
-		 this,
-		 Vector2D(
-			 (float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
-			 (float)WINDOW_HEIGHT),
-		 -(float)uniform_int_distribution<int>(1, 5)(rndGenerator),
-		 getTexture(BALLOONS),
-		 uniform_int_distribution<int>(0, 6)(rndGenerator));
+	_objs.push_back(new Balloon(
+		this,
+		Vector2D(
+			(float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
+			(float)WINDOW_HEIGHT),
+		-(float)uniform_int_distribution<int>(1, 5)(rndGenerator),
+		getTexture(BALLOONS),
+		uniform_int_distribution<int>(0, 6)(rndGenerator)));
+ }
 
-		 _objs.push_back(bal);
+ void Game::addRndButterfly() {
+	_objs.push_back(new Butterfly(
+		this,
+		getTexture(BUTTERFLY),
+		Vector2D(
+			(float)uniform_int_distribution<int>(0, Game::WINDOW_WIDTH - BTF_SIZE)(rndGenerator),
+			(float)uniform_int_distribution<int>(0, Game::WINDOW_HEIGHT - BTF_SIZE)(rndGenerator))));
  }
 
  void Game::addArrow(const Vector2D<float>& pos) {

@@ -2,7 +2,7 @@
 #include "MobileObject.h"
 
 constexpr float BTF_SIZE = 50.0f;
-constexpr float BTF_DEAD_SPEED = 50.0f;
+constexpr float FALL_SPEED = 50.0f;
 constexpr int BTF_MAX_SPEED = 50.0f;
 constexpr int BTF_MIN_SPEED = 5.0f;
 
@@ -16,7 +16,7 @@ enum BtflyAnimnState {
 class Butterfly : public MobileObject
 {
 public:
-	Butterfly(Game* game, Texture* text);
+	Butterfly(Game* game, Texture* text, Vector2D<float> pos);
 
 	void render() const override;
 	bool update(float delta) override;

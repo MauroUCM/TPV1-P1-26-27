@@ -1,7 +1,7 @@
 #include "Butterfly.h"
 
-Butterfly::Butterfly(Game* game, Texture* text) 
-	: MobileObject(game, text, new Rectangle({ 200.0f, 200.0f }, BTF_SIZE)) {
+Butterfly::Butterfly(Game* game, Texture* text, Vector2D<float> pos)
+	: MobileObject(game, text, new Rectangle(pos, BTF_SIZE)) {
 	_speed = _gm->generateRndInt(BTF_MIN_SPEED, BTF_MAX_SPEED) * Game::SPEED_RATIO;
 
 	changeDirRnd();
@@ -33,7 +33,7 @@ bool Butterfly::update(float delta) {
 }
 
 void Butterfly::changeDirRnd() {
-
+	//_vel = { _gm->generateRndInt(0, 100) / 100.0f, _gm->generateRndInt(0, 100) / 100.0f };
 }
 
 bool Butterfly::hit(const Rectangle& obj) {
