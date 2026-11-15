@@ -80,7 +80,8 @@ private:
 	RGBColor bgcolor = { 44, 168, 94 };
 	long score = 0;
 	long totalScore = 0;
-	bool btflyEndgame = false;
+	bool btflyEndgame = false,
+		goalEndgame = true;
 	
 	// Variables internas
 	std::mt19937_64 rndGenerator;
@@ -113,7 +114,7 @@ public:
 	void substractBtf() { currentBtfly--; };
 
 	// devuelve el valor en puntos de los globos
-	int getBalPoints() { return balPoints; };
+	int getBalPoints() const { return balPoints; };
 
 	// Ejecuta el bucle principal del juego
 	void run();

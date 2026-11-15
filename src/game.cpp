@@ -80,6 +80,11 @@ Game::~Game() {
 	// Liberacion de la memoria reservada
 	for (Texture* tex : textures) delete tex;
 	for (GameObject* go : _objs) delete go;
+
+	// liberacion de recursos de SDL
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
 }
 
 void Game::render() const {
@@ -112,7 +117,7 @@ void Game::update(const float delta) {
 			exit = true;
 		}
 	}
-	else if (score >= goal) {
+	else if (score >= goal && goalEndgame) {
 		exit = loadNextLevel();
 	}
 
@@ -228,14 +233,12 @@ bool Game::checkCollision(const Rectangle& rect){
 			else if (key == "goal") {		// meta de puntos
 				levelIn >> aux;
 				goal = aux;
+				goalEndgame = aux != 0;
 			}
-			else if (key == "butterflies") { // mariposas
+			else if (key == "butterflies") {// mariposas
 				levelIn >> aux;
-				if (aux > 0) btflyEndgame = true;
-				for (int i = 0; i < aux; i++) {
-					addRndButterfly();
-					currentBtfly++;
-				}
+				currentBtfly = aux;
+				btflyEndgame = aux > 0;
 			}
 			else {	// descartar linea
 				levelIn.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -249,7 +252,7 @@ bool Game::checkCollision(const Rectangle& rect){
 	// se aplica el color de fondo independientemente de si ha sido cambiado
 	SDL_SetRenderDrawColor(renderer, bgcolor.r, bgcolor.g, bgcolor.b, SDL_ALPHA_OPAQUE);
 
-	// se crean los objetos basicos del juego
+	// se crean los objetos iniciales del juego
 	bow = new Bow(this,
 		Vector2D<float>(
 			WINDOW_WIDTH / 16,
@@ -258,6 +261,7 @@ bool Game::checkCollision(const Rectangle& rect){
 		getTexture(BOW));
 	_objs.push_back(bow);
 	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
+	for (int i = 0; i <= currentBtfly; i++) addRndButterfly();
  }
 
  bool Game::loadNextLevel() {

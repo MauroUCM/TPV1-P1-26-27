@@ -1,4 +1,8 @@
 Mauro Martínez Montes
 
+Notas:
+- Infobar hereda de SceneObject en vez de GameObject porque funcionaba igual de bien añadiéndolo a la lista de objetos y me ahorraba tener que hacer distinciones innecesarias.
+- Bow fue hecho con MobileObject en vez de SceneObject porque el update de MobileObject encajaba mejor con el diseño de Bow.
+
 Opcionales hechos:
 - Si no quedan mariposas en la escena, se acaba la partida con derrota del jugador
