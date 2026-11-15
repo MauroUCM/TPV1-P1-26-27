@@ -5,6 +5,8 @@ constexpr float BTF_SIZE = 50.0f;
 constexpr float FALL_SPEED = 2.0f;
 constexpr float BTF_MAX_SPEED = 3.0f;
 constexpr float BTF_MIN_SPEED = 1.0f;
+constexpr float BTF_MAX_TURN_TIME = 10000.0f;
+constexpr float BTF_MIN_TURN_TIME = 1000.0f;
 constexpr int BTF_PENALTY = -10;
 
 enum BtflyAnimnState {
@@ -25,6 +27,8 @@ public:
 
 private:
 	void changeDirRnd();
+	// gestiona la mariposa respecto al limite de la pantalla
+	void manageLimits();
 	
 	BtflyAnimnState _animState = MOVING_LEFT;
 	float _speed;

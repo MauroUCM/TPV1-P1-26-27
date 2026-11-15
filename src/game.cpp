@@ -81,7 +81,7 @@ Game::~Game() {
 	for (Texture* tex : textures) delete tex;
 	for (GameObject* go : _objs) delete go;
 
-	// liberacion de recursos de SDL
+	// Liberacion de recursos de SDL
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

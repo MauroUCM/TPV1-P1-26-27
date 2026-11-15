@@ -5,7 +5,6 @@
 Butterfly::Butterfly(Game* game, Texture* text, Vector2D<float> pos)
 	: MobileObject(game, text, new Rectangle(pos, BTF_SIZE)) {
 	_speed = _gm->generateRndInt(BTF_MIN_SPEED, BTF_MAX_SPEED) * Game::SPEED_RATIO;
-
 	changeDirRnd();
 }
 
@@ -21,24 +20,10 @@ bool Butterfly::update(float delta) {
 
 	if (_alive) {
 		// gestión de limites
-		if (_vel.getX() >= 0) {	// en el eje X
-			if (_rec->getTopLeftCorner().getX() + BTF_SIZE >= Game::WINDOW_WIDTH) {
-				_vel.setX(-_vel.getX());
-				_animState = TURNING_LEFT;
-			}
-		}
-		else {
-			if (_rec->getTopLeftCorner().getX() <= 0) {
-				_vel.setX(-_vel.getX());
-				_animState = TURNING_RIGHT;
-			}
-		}
-		if (_vel.getY() >= 0) {	// en el eje Y
-			if (_rec->getTopLeftCorner().getY() + BTF_SIZE >= Game::WINDOW_HEIGHT) _vel.setY(-_vel.getY());
-		}
-		else {
-			if (_rec->getTopLeftCorner().getY() <= 0) _vel.setY(-_vel.getY());
-		}
+		manageLimits();
+
+		_timeSncLastDirChng += delta;
+		if (_timeSncLastDirChng >= _nextDirChange) changeDirRnd();
 
 		// animacion
 		if (_timeSncLastFrame >= Game::ANIM_FRAMES_RATE) {
@@ -47,7 +32,6 @@ bool Butterfly::update(float delta) {
 			if (_animFrame >= _text->getNumColumns()) {
 				if (_animState == TURNING_LEFT) _animState = MOVING_LEFT;
 				else if (_animState == TURNING_RIGHT) _animState = MOVING_RIGHT;
-
 				_animFrame = 0;
 			}
 		}
@@ -64,10 +48,15 @@ void Butterfly::changeDirRnd() {
 	_vel = { std::cos(ang), std::sin(ang) };
 	_vel = _vel * _speed;
 
-	if ((_vel.getX() >= 0.0f) == (oldX >= 0.0f)) {
+	if ((_vel.getX() >= 0.0f) != (oldX >= 0.0f)) {
 		if (_vel.getX() >= 0.0f) _animState = TURNING_RIGHT;
 		else _animState = TURNING_LEFT;
+		_animFrame = 0;
 	}
+
+	_nextDirChange = _gm->generateRndInt(BTF_MIN_TURN_TIME, BTF_MAX_TURN_TIME);
+	std::cout << _nextDirChange << "\n";
+	_timeSncLastDirChng = 0;
 }
 
 bool Butterfly::hit(const Rectangle& obj) {
@@ -78,4 +67,27 @@ bool Butterfly::hit(const Rectangle& obj) {
 		_vel = { 0.0f, FALL_SPEED * Game::SPEED_RATIO };
 	}
 	return false;
+}
+
+void Butterfly::manageLimits() {
+	if (_vel.getX() >= 0) {	// en el eje X
+		if (_rec->getTopLeftCorner().getX() + BTF_SIZE >= Game::WINDOW_WIDTH) {
+			_vel.setX(-_vel.getX());
+			_animState = TURNING_LEFT;
+			_animFrame = 0;
+		}
+	}
+	else {
+		if (_rec->getTopLeftCorner().getX() <= 0) {
+			_vel.setX(-_vel.getX());
+			_animState = TURNING_RIGHT;
+			_animFrame = 0;
+		}
+	}
+	if (_vel.getY() >= 0) {	// en el eje Y
+		if (_rec->getTopLeftCorner().getY() + BTF_SIZE >= Game::WINDOW_HEIGHT) _vel.setY(-_vel.getY());
+	}
+	else {
+		if (_rec->getTopLeftCorner().getY() <= 0) _vel.setY(-_vel.getY());
+	}
 }
