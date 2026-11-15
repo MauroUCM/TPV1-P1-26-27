@@ -273,7 +273,7 @@ bool Game::checkCollision(const Rectangle& rect){
 		getTexture(BOW));
 	_objs.push_back(bow);
 	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
-	for (int i = 0; i <= currentBtfly; i++) addRndButterfly();
+	for (int i = 0; i < currentBtfly; i++) addRndButterfly();
  }
 
  bool Game::loadNextLevel() {
