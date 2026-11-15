@@ -47,9 +47,6 @@ Game::Game()
 	                                 0, &window, &renderer))
 		throw "window or renderer: "s + SDL_GetError();
 
-	// lectura del archivo
-	loadFLevel(1);
-
 	// Carga las texturas al inicio
 	try {
 		textures.fill(nullptr);
@@ -75,6 +72,9 @@ Game::Game()
 	balElapsed = 0;
 	mustDelBfr = 0;
 
+	// lectura del archivo y carga el nivel
+	loadFLevel(1);
+
 	// Crea los objetos del juego
 	bow = new Bow(this,
 		Vector2D<float>(
@@ -85,8 +85,6 @@ Game::Game()
 	_objs.push_back(bow);
 
 	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
-
-	addRndButterfly();
 }
 
 Game::~Game() {
@@ -233,6 +231,10 @@ bool Game::checkCollision(const Rectangle& rect){
 			else if (key == "goal") {		// meta de puntos
 				levelIn >> aux;
 				goal = aux;
+			}
+			else if (key == "butterflies") { // mariposas
+				levelIn >> aux;
+				for (int i = 0; i < aux; i++) addRndButterfly();
 			}
 			else {	// descartar linea
 				levelIn.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

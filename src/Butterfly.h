@@ -2,9 +2,10 @@
 #include "MobileObject.h"
 
 constexpr float BTF_SIZE = 50.0f;
-constexpr float FALL_SPEED = 50.0f;
-constexpr int BTF_MAX_SPEED = 50.0f;
-constexpr int BTF_MIN_SPEED = 5.0f;
+constexpr float FALL_SPEED = 2.0f;
+constexpr float BTF_MAX_SPEED = 3.0f;
+constexpr float BTF_MIN_SPEED = 1.0f;
+constexpr int BTF_PENALTY = -10;
 
 enum BtflyAnimnState {
 	MOVING_LEFT = 0,
@@ -24,13 +25,13 @@ public:
 
 private:
 	void changeDirRnd();
-
+	
 	BtflyAnimnState _animState = MOVING_LEFT;
 	float _speed;
+	float _nextDirChange;
 
-	int _animFrame = 0;
+	Uint16 _animFrame = 0;
 	bool _alive = true;
-	int _timeSncLastFrame = 0;
-
-
+	Uint16 _timeSncLastFrame = 0;
+	Uint16 _timeSncLastDirChng = 0;
 };

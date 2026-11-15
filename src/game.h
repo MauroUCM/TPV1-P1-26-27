@@ -74,8 +74,8 @@ private:
 		curLevel = 0;
 	float balDelay = 500;
 	RGBColor bgcolor = { 44, 168, 94 };
-	Uint16 score = 0;
-	Uint16 totalScore = 0;
+	long score = 0;
+	long totalScore = 0;
 	
 	// Variables internas
 	std::mt19937_64 rndGenerator;
@@ -86,11 +86,6 @@ private:
 	// Elementos del juego
 	std::list<SceneObject*> _objs;
 	Bow* bow;
-	//std::vector<Balloon*> balloons;
-
-
-	// Elementos del juego
-	//std::vector<Arrow*> arrows;
 
 public:
 	Game();

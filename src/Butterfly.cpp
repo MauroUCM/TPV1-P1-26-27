@@ -1,4 +1,6 @@
 #include "Butterfly.h"
+#include <cmath>
+#include <numbers>
 
 Butterfly::Butterfly(Game* game, Texture* text, Vector2D<float> pos)
 	: MobileObject(game, text, new Rectangle(pos, BTF_SIZE)) {
@@ -18,28 +20,61 @@ bool Butterfly::update(float delta) {
 	_timeSncLastFrame += delta;
 
 	if (_alive) {
+		// gestión de limites
+		if (_vel.getX() >= 0) {	// en el eje X
+			if (_rec->getTopLeftCorner().getX() + BTF_SIZE >= Game::WINDOW_WIDTH) {
+				_vel.setX(-_vel.getX());
+				_animState = TURNING_LEFT;
+			}
+		}
+		else {
+			if (_rec->getTopLeftCorner().getX() <= 0) {
+				_vel.setX(-_vel.getX());
+				_animState = TURNING_RIGHT;
+			}
+		}
+		if (_vel.getY() >= 0) {	// en el eje Y
+			if (_rec->getTopLeftCorner().getY() + BTF_SIZE >= Game::WINDOW_HEIGHT) _vel.setY(-_vel.getY());
+		}
+		else {
+			if (_rec->getTopLeftCorner().getY() <= 0) _vel.setY(-_vel.getY());
+		}
 
 		// animacion
 		if (_timeSncLastFrame >= Game::ANIM_FRAMES_RATE) {
 			_animFrame++;
 			_timeSncLastFrame = 0;
-			if (_animFrame >= _text->getNumColumns()) _animFrame = 0;
+			if (_animFrame >= _text->getNumColumns()) {
+				if (_animState == TURNING_LEFT) _animState = MOVING_LEFT;
+				else if (_animState == TURNING_RIGHT) _animState = MOVING_RIGHT;
+
+				_animFrame = 0;
+			}
 		}
+
+		return true;
 	}
-
-
-
-	return _rec->getTopLeftCorner().getY() < Game::WINDOW_HEIGHT;
+	else return _rec->getTopLeftCorner().getY() < Game::WINDOW_HEIGHT;
 }
 
 void Butterfly::changeDirRnd() {
-	//_vel = { _gm->generateRndInt(0, 100) / 100.0f, _gm->generateRndInt(0, 100) / 100.0f };
+	float ang = _gm->generateRndInt(0, 360) * (std::numbers::pi / 180);
+	float oldX = _vel.getX();
+
+	_vel = { std::cos(ang), std::sin(ang) };
+	_vel = _vel * _speed;
+
+	if ((_vel.getX() >= 0.0f) == (oldX >= 0.0f)) {
+		if (_vel.getX() >= 0.0f) _animState = TURNING_RIGHT;
+		else _animState = TURNING_LEFT;
+	}
 }
 
 bool Butterfly::hit(const Rectangle& obj) {
 	if (_rec->hasIntersection(obj) && _alive) {
 		_alive = false;
-		return true;
+		_gm->addScore(BTF_PENALTY, 1);
+		_vel = { 0.0f, FALL_SPEED * Game::SPEED_RATIO };
 	}
-	else return false;
+	return false;
 }

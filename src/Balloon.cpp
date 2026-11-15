@@ -1,7 +1,7 @@
 #include "Balloon.h"
 
-Balloon::Balloon(Game* gm, Vector2D<float> pos, float vel, Texture* text, int color)
-	: MobileObject(gm, text, new Rectangle(pos, BALLOON_SIZE), Vector2D(0.0f, 1.0f) * (vel * Game::SPEED_RATIO)), 
+Balloon::Balloon(Game* gm, Vector2D<float> pos, float speed, Texture* text, int color)
+	: MobileObject(gm, text, new Rectangle(pos, BALLOON_SIZE), Vector2D(0.0f, 1.0f) * (speed * Game::SPEED_RATIO)), 
 	_color(color) {
 
 }
