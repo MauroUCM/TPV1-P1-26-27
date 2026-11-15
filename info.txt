@@ -1,6 +1,4 @@
 Mauro Martínez Montes
 
 Opcionales hechos:
-- Infobar
-- Ampliacion de opciones de configuración
-- Carga de multiples niveles
+- Si no quedan mariposas en la escena, se acaba la partida con derrota del jugador
