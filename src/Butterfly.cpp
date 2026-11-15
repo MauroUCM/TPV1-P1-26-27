@@ -74,6 +74,7 @@ bool Butterfly::hit(const Rectangle& obj) {
 	if (_rec->hasIntersection(obj) && _alive) {
 		_alive = false;
 		_gm->addScore(BTF_PENALTY, 1);
+		_gm->substractBtf();
 		_vel = { 0.0f, FALL_SPEED * Game::SPEED_RATIO };
 	}
 	return false;

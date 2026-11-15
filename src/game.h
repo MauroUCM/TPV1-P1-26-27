@@ -62,8 +62,12 @@ private:
 
 	void addRndBalloon();
 	void addRndButterfly();
+
 	void loadFLevel(int level);
 	bool loadNextLevel();
+
+	void saveGame();
+	void loadGame();
 	
 	bool exit;
 
@@ -76,12 +80,14 @@ private:
 	RGBColor bgcolor = { 44, 168, 94 };
 	long score = 0;
 	long totalScore = 0;
+	bool btflyEndgame = false;
 	
 	// Variables internas
 	std::mt19937_64 rndGenerator;
 	float lastUpdate;
 	float balElapsed;
 	int mustDelBfr; // cuenta el numero de objetos que tienen que destruirse antes de terminar la partida
+	int currentBtfly; // cuenta el numero de mariposas presentes, si llega a cero y la configuracion lo indica termina la partida 
 
 	// Elementos del juego
 	std::list<SceneObject*> _objs;
@@ -102,6 +108,9 @@ public:
 
 	// añade base * mult a la puntuacion
 	void addScore(int base, int mult);
+
+	// resta uno al contador de butterflies
+	void substractBtf() { currentBtfly--; };
 
 	// devuelve el valor en puntos de los globos
 	int getBalPoints() { return balPoints; };

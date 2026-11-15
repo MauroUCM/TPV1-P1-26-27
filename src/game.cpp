@@ -74,17 +74,6 @@ Game::Game()
 
 	// lectura del archivo y carga el nivel
 	loadFLevel(1);
-
-	// Crea los objetos del juego
-	bow = new Bow(this,
-		Vector2D<float>(
-			WINDOW_WIDTH / 16, 
-			WINDOW_HEIGHT / 2),
-		7.0f, 
-		getTexture(BOW));
-	_objs.push_back(bow);
-
-	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
 }
 
 Game::~Game() {
@@ -118,8 +107,10 @@ void Game::update(const float delta) {
 	}
 
 	// comprueba si es el final del juego
-	if (nArrows <= 0 && mustDelBfr <= 0) {
-		exit = true;
+	if (mustDelBfr <= 0) {
+		if (nArrows <= 0 || (btflyEndgame && currentBtfly <= 0)) {
+			exit = true;
+		}
 	}
 	else if (score >= goal) {
 		exit = loadNextLevel();
@@ -142,8 +133,9 @@ void Game::run() {
 			SDL_Delay(FRAME_PERIOD - elapsedRun);
 		}
 	}
-	std::cout << "You got up to level " << curLevel << "!\n";
-	std::cout << "FINAL TOTAL SCORE: " << totalScore + score;
+
+	std::cout << std::format("You got up to level {}!\n", curLevel);
+	std::cout << std::format("FINAL TOTAL SCORE: {}\n", totalScore + score);
 }
 
 void Game::handleEvents() {
@@ -194,9 +186,14 @@ bool Game::checkCollision(const Rectangle& rect){
  }
 
  void Game::loadFLevel(int lev) {
+	 for (GameObject* go : _objs) delete go;
+	 _objs.clear();
+
 	 curLevel = lev;
 	 totalScore += score;
 	 score = 0;
+	 btflyEndgame = false;
+	 currentBtfly = 0;
 
 	// Lectura del archivo
 	try {
@@ -234,7 +231,11 @@ bool Game::checkCollision(const Rectangle& rect){
 			}
 			else if (key == "butterflies") { // mariposas
 				levelIn >> aux;
-				for (int i = 0; i < aux; i++) addRndButterfly();
+				if (aux > 0) btflyEndgame = true;
+				for (int i = 0; i < aux; i++) {
+					addRndButterfly();
+					currentBtfly++;
+				}
 			}
 			else {	// descartar linea
 				levelIn.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -242,11 +243,21 @@ bool Game::checkCollision(const Rectangle& rect){
 		}
 	}
 	catch (const char* error) {
-		std::cout << "ERROR: "<< error << " Default settings won't be overriden.\n";
+		std::cout << std::format("ERROR: {} Default settings won't be overriden.\n", error);
 	}
 
 	// se aplica el color de fondo independientemente de si ha sido cambiado
 	SDL_SetRenderDrawColor(renderer, bgcolor.r, bgcolor.g, bgcolor.b, SDL_ALPHA_OPAQUE);
+
+	// se crean los objetos basicos del juego
+	bow = new Bow(this,
+		Vector2D<float>(
+			WINDOW_WIDTH / 16,
+			WINDOW_HEIGHT / 2),
+		7.0f,
+		getTexture(BOW));
+	_objs.push_back(bow);
+	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
  }
 
  bool Game::loadNextLevel() {
@@ -265,9 +276,17 @@ bool Game::checkCollision(const Rectangle& rect){
 
  void Game::addScore(int base, int mult) {
 	 score += base * mult;
-	 std::cout << "Current score: " << score << "\n";
+	 std::cout << std::format("Current score: {}\n", score);
  }
 
  int Game::generateRndInt(int min, int max) {
 	 return uniform_int_distribution<int>(min, max)(rndGenerator);
+ }
+
+ void Game::saveGame() {
+	 std::cout << "Partida guardada\n";
+ }
+
+ void Game::loadGame() {
+	 std::cout << "Partida cargada\n";
  }
