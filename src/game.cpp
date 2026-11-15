@@ -151,6 +151,18 @@ void Game::handleEvents() {
 		if (event.type == SDL_EVENT_QUIT)
 			exit = true;
 
+		if (event.type == SDL_EVENT_KEY_DOWN && event.key.mod & SDL_KMOD_CTRL) {
+			switch (event.key.key)
+			{
+			case SDLK_O:
+				loadGame();
+				break;
+			case SDLK_S:
+				saveGame();
+				break;
+			}
+		}
+
 		bow->handleEvent(event);
 	}
 }

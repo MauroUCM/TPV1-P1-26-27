@@ -55,7 +55,6 @@ void Butterfly::changeDirRnd() {
 	}
 
 	_nextDirChange = _gm->generateRndInt(BTF_MIN_TURN_TIME, BTF_MAX_TURN_TIME);
-	std::cout << _nextDirChange << "\n";
 	_timeSncLastDirChng = 0;
 }
 
