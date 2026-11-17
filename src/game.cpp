@@ -116,9 +116,9 @@ void Game::update(const float delta) {
 		if (nArrows <= 0 || (btflyEndgame && currentBtfly <= 0)) {
 			exit = true;
 		}
-	}
-	else if (score >= goal && goalEndgame) {
-		exit = loadNextLevel();
+		else if (score >= goal && goalEndgame) {
+			exit = loadNextLevel();
+		}
 	}
 
 	lastUpdate = SDL_GetTicks();
