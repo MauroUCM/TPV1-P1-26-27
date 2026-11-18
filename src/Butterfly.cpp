@@ -90,3 +90,13 @@ void Butterfly::manageLimits() {
 		if (_rec->getTopLeftCorner().getY() <= 0) _vel.setY(-_vel.getY());
 	}
 }
+
+void Butterfly::save(std::ostream& out) {
+	out << "U ";
+	MobileObject::save(out);
+	out << _animState << " " << _speed << " " << _nextDirChange << "\n";
+}
+
+void Butterfly::load(std::istream& in) {
+
+}

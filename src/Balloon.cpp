@@ -35,3 +35,14 @@ bool Balloon::hit(const Rectangle& obj) {
 	}
 	else return false;
 }
+
+
+void Balloon::save(std::ostream& out) {
+	out << "B ";
+	MobileObject::save(out);
+	out << _color << " " << _alive << "\n";
+}
+
+void Balloon::load(std::istream& in) {
+
+}

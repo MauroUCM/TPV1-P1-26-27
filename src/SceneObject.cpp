@@ -12,3 +12,12 @@ SceneObject::~SceneObject() {
 bool SceneObject::hit(const Rectangle& rec) {
 	return false;
 }
+
+void SceneObject::save(std::ostream& out) {
+	out << _rec->getTopLeftCorner() << " " << _rec->getWidth() 
+		<< " " << _rec->getHeight() << " ";
+}
+
+void SceneObject::load(std::istream& in) {
+
+}

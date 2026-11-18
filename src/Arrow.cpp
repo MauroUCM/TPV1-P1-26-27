@@ -30,3 +30,12 @@ bool Arrow::update(float delta) {
 	else return true;
 }
 
+void Arrow::save(std::ostream& out) {
+	out << "A ";
+	MobileObject::save(out);
+	out << scoreMult << "\n";
+}
+
+void Arrow::load(std::istream& in) {
+
+}

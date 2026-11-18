@@ -68,3 +68,13 @@ void Bow::shoot() {
 		_gm->addArrow(_rec->getTopLeftCorner() + Vector2D(0.0f, (float)BOW_SIZE / 2));
 	}
 }
+
+void Bow::save(std::ostream& out) {
+	out << "B ";
+	MobileObject::save(out);
+	out << _speed << " " << _armed << "\n";
+}
+
+void Bow::load(std::istream& in) {
+
+}

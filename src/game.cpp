@@ -300,9 +300,24 @@ bool Game::checkCollision(const Rectangle& rect){
  }
 
  void Game::saveGame() {
+	 std::ofstream savFile;
+	 savFile.open("saved.txt");
+
+	 for (GameObject* sav : _objs) {
+		 sav->save(savFile);
+	 }
+
+	 savFile.close();
+
 	 std::cout << "Partida guardada\n";
  }
 
  void Game::loadGame() {
+	 std::ifstream savFile;
+	 savFile.open("saved.txt");
+
+
+	 savFile.close();
+
 	 std::cout << "Partida cargada\n";
  }

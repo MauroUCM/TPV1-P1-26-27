@@ -11,6 +11,9 @@ public:
 	void render() const override;
 	bool update(float delta) override;
 
+	virtual void save(std::ostream& out) override;
+	virtual void load(std::istream& in) override;
+
 	bool hit(const Rectangle& obj) override;
 
 private:

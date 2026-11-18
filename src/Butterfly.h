@@ -25,6 +25,9 @@ public:
 	bool update(float delta) override;
 	bool hit(const Rectangle& obj) override;
 
+	virtual void save(std::ostream& out) override;
+	virtual void load(std::istream& in) override;
+
 private:
 	void changeDirRnd();
 	// gestiona la mariposa respecto al limite de la pantalla

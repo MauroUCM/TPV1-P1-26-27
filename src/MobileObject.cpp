@@ -10,3 +10,14 @@ bool MobileObject::update(float delta) {
 
 	return true;
 }
+
+void MobileObject::save(std::ostream& out) {
+	SceneObject::save(out);
+
+	out << _vel << " ";
+}
+
+void MobileObject::load(std::istream& in) {
+	SceneObject::load(in);
+
+}

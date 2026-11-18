@@ -12,6 +12,9 @@ public:
 	virtual void render() const override = 0;
 	virtual bool update(float delta) override = 0;
 
+	virtual void save(std::ostream& out);
+	virtual void load(std::istream& in);
+
 	// de normal devuelve false, cada objeto debe configurarlo en su clase
 	virtual bool hit(const Rectangle&);
 

@@ -12,6 +12,9 @@ public:
 	bool update(float delta) override;
 	void handleEvent(const SDL_Event& event);
 
+	virtual void save(std::ostream& out) override;
+	virtual void load(std::istream& in) override;
+
 private:
 	void shoot();
 
