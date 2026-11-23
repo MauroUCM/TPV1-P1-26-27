@@ -38,7 +38,7 @@ bool Balloon::hit(const Rectangle& obj) {
 
 
 void Balloon::save(std::ostream& out) {
-	out << "B ";
+	out << "L ";
 	MobileObject::save(out);
 	out << _color << " " << _alive << "\n";
 }

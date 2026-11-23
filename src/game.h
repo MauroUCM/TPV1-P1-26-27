@@ -48,7 +48,15 @@ public:
 	// struct para colores RGB
 	struct RGBColor
 	{
-		Uint8 r, g, b;
+		int r, g, b;
+
+		friend std::ostream& operator<<(std::ostream& out, const RGBColor& rgb) {
+			return out << rgb.r << " " << rgb.g << " " << rgb.b;
+		}
+		friend std::istream& operator>>(std::istream& in, RGBColor& rgb) {
+			in >> rgb.r >> rgb.g >> rgb.b;
+			return in;
+		}
 	};
 
 private:
@@ -78,8 +86,8 @@ private:
 		curLevel = 0;
 	float balDelay = 500;
 	RGBColor bgcolor = { 44, 168, 94 };
-	long score = 0;
-	long totalScore = 0;
+	long score = 0,
+		totalScore = 0;
 	bool btflyEndgame = false,
 		goalEndgame = true;
 	

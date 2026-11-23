@@ -303,6 +303,10 @@ bool Game::checkCollision(const Rectangle& rect){
 	 std::ofstream savFile;
 	 savFile.open("saved.txt");
 
+	 savFile << nArrows << " " << balPoints << " " << goal << " " << curLevel << " "
+		 << balDelay << " " << bgcolor << " " << score << " " << totalScore << " "
+		 << btflyEndgame << " " << goalEndgame << "\n";
+
 	 for (GameObject* sav : _objs) {
 		 sav->save(savFile);
 	 }
@@ -313,9 +317,38 @@ bool Game::checkCollision(const Rectangle& rect){
  }
 
  void Game::loadGame() {
+	 // borrado de los objetos del juego antes de cargar los nuevos
+	 for (GameObject* go : _objs) delete go;
+	 _objs.clear();
+
+	 // objetos especiales
+	 _objs.push_back(new InfoBar(this, getTexture(ARROW)));
+
+	 // archivo
 	 std::ifstream savFile;
 	 savFile.open("saved.txt");
 
+	 // atributos del game
+	 savFile >> nArrows >> balPoints >> goal >> curLevel >> balDelay >> bgcolor 
+		 >> score >> totalScore >> btflyEndgame >> goalEndgame;
+
+	 char aux;
+	 while (!savFile ) {
+		 cin >> aux;
+
+		 switch (aux) {
+		 case 'B':	// Bow
+
+		 case 'U':	// Butterfly
+
+		 case 'A':	// Arrow
+
+		 case 'L':	// Balloon
+
+		 default:
+			 cout << "Error en el cargado, tipo de objeto no reconocido.";
+		 }
+	 }
 
 	 savFile.close();
 

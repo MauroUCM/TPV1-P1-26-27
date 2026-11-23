@@ -11,6 +11,7 @@ public:
 	void render() const override;
 	bool update(float delta) override { return true; };
 
+	// vacios porque depende del game para funcionar
 	virtual void save(std::ostream& out) override {};
 	virtual void load(std::istream& in) override {};
 
