@@ -1,5 +1,7 @@
 #include "SceneObject.h"
 
+SceneObject::SceneObject(Game* gm, Texture* text) : GameObject(gm), _text(text) {};
+
 SceneObject::SceneObject(Game* gm, Texture* text, Rectangle* rec) 
 	: GameObject(gm), _rec(rec), _text(text) {
 
@@ -19,5 +21,8 @@ void SceneObject::save(std::ostream& out) {
 }
 
 void SceneObject::load(std::istream& in) {
-
+	float x, y;
+	int w, h;
+	in >> x >> y >> w >> h;
+	_rec = new Rectangle({x, y}, w, h);
 }

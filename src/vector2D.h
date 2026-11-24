@@ -48,7 +48,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Vector2D& v) {
 		return out << v.x << " " << v.y;
 	}
-	friend std::istream& operator>>(std::istream& in, const Vector2D& v) {
+	friend std::istream& operator>>(std::istream& in, Vector2D& v) {
 		in >> v.x >> v.y;
 		return in;
 	}

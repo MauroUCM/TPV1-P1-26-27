@@ -184,14 +184,12 @@ bool Game::checkCollision(const Rectangle& rect){
 			(float)uniform_int_distribution<int>(WINDOW_WIDTH / 3.0f, WINDOW_WIDTH - BOW_SIZE)(rndGenerator),
 			(float)WINDOW_HEIGHT),
 		-(float)uniform_int_distribution<int>(1, 5)(rndGenerator),
-		getTexture(BALLOONS),
 		uniform_int_distribution<int>(0, 6)(rndGenerator)));
  }
 
  void Game::addRndButterfly() {
 	_objs.push_back(new Butterfly(
 		this,
-		getTexture(BUTTERFLY),
 		Vector2D(
 			(float)uniform_int_distribution<int>(0, Game::WINDOW_WIDTH - BTF_SIZE)(rndGenerator),
 			(float)uniform_int_distribution<int>(0, Game::WINDOW_HEIGHT - BTF_SIZE)(rndGenerator))));
@@ -199,7 +197,7 @@ bool Game::checkCollision(const Rectangle& rect){
 
  void Game::addArrow(const Vector2D<float>& pos) {
 	 nArrows--;
-	 _objs.push_back(new Arrow(this, pos, getTexture(ARROW), DEFAULT_ARROW_SPEED));
+	 _objs.push_back(new Arrow(this, pos, DEFAULT_ARROW_SPEED));
  }
 
  void Game::loadFLevel(int lev) {
@@ -269,10 +267,9 @@ bool Game::checkCollision(const Rectangle& rect){
 		Vector2D<float>(
 			WINDOW_WIDTH / 16,
 			WINDOW_HEIGHT / 2),
-		7.0f,
-		getTexture(BOW));
+		7.0f);
 	_objs.push_back(bow);
-	_objs.push_back(new InfoBar(this, getTexture(ARROW)));
+	_objs.push_back(new InfoBar(this));
 	for (int i = 0; i < currentBtfly; i++) addRndButterfly();
  }
 
@@ -321,8 +318,8 @@ bool Game::checkCollision(const Rectangle& rect){
 	 for (GameObject* go : _objs) delete go;
 	 _objs.clear();
 
-	 // objetos especiales
-	 _objs.push_back(new InfoBar(this, getTexture(ARROW)));
+	 // objetos especiales/unicos
+	 _objs.push_back(new InfoBar(this));
 
 	 // archivo
 	 std::ifstream savFile;
@@ -333,18 +330,28 @@ bool Game::checkCollision(const Rectangle& rect){
 		 >> score >> totalScore >> btflyEndgame >> goalEndgame;
 
 	 char aux;
+	 SceneObject* auxObj;
+
 	 while (!savFile ) {
 		 cin >> aux;
 
 		 switch (aux) {
 		 case 'B':	// Bow
-
+			 auxObj = new Bow(this);
+			 auxObj->load(savFile);
+			 _objs.push_back(auxObj);
 		 case 'U':	// Butterfly
-
+			 auxObj = new Butterfly(this);
+			 auxObj->load(savFile);
+			 _objs.push_back(auxObj);
 		 case 'A':	// Arrow
-
+			 auxObj = new Arrow(this);
+			 auxObj->load(savFile);
+			 _objs.push_back(auxObj);
 		 case 'L':	// Balloon
-
+			 auxObj = new Balloon(this);
+			 auxObj->load(savFile);
+			 _objs.push_back(auxObj);
 		 default:
 			 cout << "Error en el cargado, tipo de objeto no reconocido.";
 		 }

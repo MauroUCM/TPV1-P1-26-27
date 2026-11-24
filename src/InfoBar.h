@@ -6,7 +6,7 @@ constexpr float ICON_SIZE = 10.0f;
 class InfoBar : public SceneObject
 {
 public:
-	InfoBar(Game* game, Texture* text);
+	InfoBar(Game* game);
 
 	void render() const override;
 	bool update(float delta) override { return true; };

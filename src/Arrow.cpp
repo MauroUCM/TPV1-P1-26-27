@@ -1,7 +1,12 @@
 #include "Arrow.h"
 
-Arrow::Arrow(Game* game, Vector2D<float> pos, Texture* text, float speed) 
-: MobileObject(game, text, new Rectangle(pos, ARROW_SIZE * 5, ARROW_SIZE), Vector2D(speed * Game::SPEED_RATIO, 0.0f)) {
+Arrow::Arrow(Game* gm) : MobileObject(gm, gm->getTexture(Game::ARROW)) {
+
+}
+
+Arrow::Arrow(Game* game, Vector2D<float> pos, float speed) 
+: MobileObject(game, game->getTexture(Game::ARROW), new Rectangle(pos, ARROW_SIZE * 5, ARROW_SIZE), 
+	Vector2D(speed* Game::SPEED_RATIO, 0.0f)) {
 	_colRec = Rectangle(pos + Vector2D((float)ARROW_SIZE * 4, 0.0f), ARROW_SIZE / 5, ARROW_SIZE / 3);
 	_gm->addUnclosable(1);
 }
@@ -37,5 +42,6 @@ void Arrow::save(std::ostream& out) {
 }
 
 void Arrow::load(std::istream& in) {
-
+	MobileObject::load(in);
+	in >> scoreMult;
 }

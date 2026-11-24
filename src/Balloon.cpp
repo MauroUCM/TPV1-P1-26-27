@@ -1,8 +1,10 @@
 #include "Balloon.h"
 
-Balloon::Balloon(Game* gm, Vector2D<float> pos, float speed, Texture* text, int color)
-	: MobileObject(gm, text, new Rectangle(pos, BALLOON_SIZE), Vector2D(0.0f, 1.0f) * (speed * Game::SPEED_RATIO)), 
-	_color(color) {
+Balloon::Balloon(Game* gm) : MobileObject(gm, gm->getTexture(Game::BALLOONS)) {}
+
+Balloon::Balloon(Game* gm, Vector2D<float> pos, float speed, int color)
+	: MobileObject(gm, gm->getTexture(Game::BALLOONS), new Rectangle(pos, BALLOON_SIZE), 
+		Vector2D(0.0f, 1.0f)* (speed* Game::SPEED_RATIO)), _color(color) {
 
 }
 
@@ -44,5 +46,6 @@ void Balloon::save(std::ostream& out) {
 }
 
 void Balloon::load(std::istream& in) {
-
+	MobileObject::load(in);
+	in >> _color >> _alive;
 }

@@ -1,7 +1,9 @@
 #include "Bow.h"
 
-Bow::Bow(Game* game, Vector2D<float> pos, float speed, Texture* text)
-	:  MobileObject(game, text, new Rectangle(pos, BOW_SIZE)), _speed(speed * Game::SPEED_RATIO) {
+Bow::Bow(Game* gm) : MobileObject(gm, gm->getTexture(Game::BOW)) {}
+
+Bow::Bow(Game* game, Vector2D<float> pos, float speed)
+	:  MobileObject(game, game->getTexture(Game::BOW), new Rectangle(pos, BOW_SIZE)), _speed(speed * Game::SPEED_RATIO) {
 	_armed = false;
 }
 
@@ -76,5 +78,6 @@ void Bow::save(std::ostream& out) {
 }
 
 void Bow::load(std::istream& in) {
-
+	MobileObject::load(in);
+	in >> _speed >> _armed;
 }

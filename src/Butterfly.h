@@ -19,7 +19,8 @@ enum BtflyAnimnState {
 class Butterfly : public MobileObject
 {
 public:
-	Butterfly(Game* game, Texture* text, Vector2D<float> pos);
+	Butterfly(Game* gm);
+	Butterfly(Game* game, Vector2D<float> pos);
 
 	void render() const override;
 	bool update(float delta) override;
@@ -33,7 +34,7 @@ private:
 	// gestiona la mariposa respecto al limite de la pantalla
 	void manageLimits();
 	
-	BtflyAnimnState _animState = MOVING_LEFT;
+	int _animState = MOVING_LEFT;
 	float _speed;
 	float _nextDirChange;
 

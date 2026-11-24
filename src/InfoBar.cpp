@@ -1,7 +1,7 @@
 #include "InfoBar.h"
 
-InfoBar::InfoBar(Game* game, Texture* text)
-	: SceneObject(game, text, new Rectangle(Vector2D(0.0f, ICON_SIZE * 2), ICON_SIZE * 5, ICON_SIZE)) {
+InfoBar::InfoBar(Game* game)
+	: SceneObject(game, game->getTexture(Game::ARROW), new Rectangle(Vector2D(0.0f, ICON_SIZE * 2), ICON_SIZE * 5, ICON_SIZE)) {
 
 }
 

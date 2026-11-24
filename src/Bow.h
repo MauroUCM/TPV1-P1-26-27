@@ -6,7 +6,8 @@ constexpr int BOW_SIZE = 100;
 class Bow : public MobileObject
 {
 public:
-	Bow(Game* game, Vector2D<float> pos, float speed, Texture* text);
+	Bow(Game* gm);
+	Bow(Game* game, Vector2D<float> pos, float speed);
 
 	void render() const override;
 	bool update(float delta) override;

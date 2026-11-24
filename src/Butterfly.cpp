@@ -2,8 +2,10 @@
 #include <cmath>
 #include <numbers>
 
-Butterfly::Butterfly(Game* game, Texture* text, Vector2D<float> pos)
-	: MobileObject(game, text, new Rectangle(pos, BTF_SIZE)) {
+Butterfly::Butterfly(Game* gm) : MobileObject(gm, gm->getTexture(Game::BUTTERFLY)) {}
+
+Butterfly::Butterfly(Game* game, Vector2D<float> pos)
+	: MobileObject(game, game->getTexture(Game::BUTTERFLY), new Rectangle(pos, BTF_SIZE)) {
 	_speed = _gm->generateRndInt(BTF_MIN_SPEED, BTF_MAX_SPEED) * Game::SPEED_RATIO;
 	changeDirRnd();
 }
@@ -98,5 +100,6 @@ void Butterfly::save(std::ostream& out) {
 }
 
 void Butterfly::load(std::istream& in) {
-
+	MobileObject::load(in);
+	in >> _animState >> _speed >> _nextDirChange;
 }

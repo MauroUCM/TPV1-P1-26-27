@@ -6,6 +6,7 @@
 class SceneObject : public GameObject
 {
 public:
+	SceneObject(Game* gm, Texture* text);
 	SceneObject(Game* gm, Texture* text, Rectangle* rec);
 	~SceneObject();
 

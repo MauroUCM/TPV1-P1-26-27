@@ -6,7 +6,8 @@ constexpr int ARROW_SIZE = 20;
 class Arrow : public MobileObject
 {
 public:
-	Arrow(Game* game, Vector2D<float> pos, Texture* text, float speed);
+	Arrow(Game* gm);
+	Arrow(Game* game, Vector2D<float> pos, float speed);
 	~Arrow();
 
 	void render() const override;
