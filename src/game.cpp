@@ -332,29 +332,28 @@ bool Game::checkCollision(const Rectangle& rect){
 	 char aux;
 	 SceneObject* auxObj;
 
-	 while (!savFile ) {
-		 cin >> aux;
-
+	 while (savFile  >> aux) {
 		 switch (aux) {
 		 case 'B':	// Bow
-			 auxObj = new Bow(this);
-			 auxObj->load(savFile);
-			 _objs.push_back(auxObj);
+			 bow = new Bow(this);
+			 auxObj = bow;
+			 break;
 		 case 'U':	// Butterfly
 			 auxObj = new Butterfly(this);
-			 auxObj->load(savFile);
-			 _objs.push_back(auxObj);
+			 break;
 		 case 'A':	// Arrow
 			 auxObj = new Arrow(this);
-			 auxObj->load(savFile);
-			 _objs.push_back(auxObj);
+			 break;
 		 case 'L':	// Balloon
 			 auxObj = new Balloon(this);
-			 auxObj->load(savFile);
-			 _objs.push_back(auxObj);
+			 break;
 		 default:
-			 cout << "Error en el cargado, tipo de objeto no reconocido.";
+			 auxObj = new Arrow(this);
+			 cout << "Error en el cargado, cabecera no reconocida.";
 		 }
+
+		 auxObj->load(savFile);
+		 _objs.push_back(auxObj);
 	 }
 
 	 savFile.close();
