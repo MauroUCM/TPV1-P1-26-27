@@ -220,9 +220,7 @@ bool Game::checkCollision(const Rectangle& rect){
 		levelIn.open(fileName);
 		if (!levelIn.is_open()) throw "Level file not found.";
 
-		while (levelIn) {
-			levelIn >> key;
-
+		while (levelIn >> key) {
 			if (key == "arrows") {			// numero de flechas
 				levelIn >> aux;
 				nArrows = aux;
@@ -275,7 +273,7 @@ bool Game::checkCollision(const Rectangle& rect){
 
  bool Game::loadNextLevel() {
 	if (std::filesystem::exists((string)LEVEL_ROOT + std::to_string(curLevel + 1) + ".txt")) {
-		// carga del segundo nivel
+		// carga del siguiente nivel
 		curLevel++;
 		loadFLevel(curLevel);
 	}
@@ -318,9 +316,6 @@ bool Game::checkCollision(const Rectangle& rect){
 	 for (GameObject* go : _objs) delete go;
 	 _objs.clear();
 
-	 // objetos especiales/unicos
-	 _objs.push_back(new InfoBar(this));
-
 	 // archivo
 	 std::ifstream savFile;
 	 savFile.open("saved.txt");
@@ -328,6 +323,10 @@ bool Game::checkCollision(const Rectangle& rect){
 	 // atributos del game
 	 savFile >> nArrows >> balPoints >> goal >> curLevel >> balDelay >> bgcolor 
 		 >> score >> totalScore >> btflyEndgame >> goalEndgame;
+
+	 // objetos/atributos especiales
+	 _objs.push_back(new InfoBar(this));
+	 SDL_SetRenderDrawColor(renderer, bgcolor.r, bgcolor.g, bgcolor.b, SDL_ALPHA_OPAQUE);
 
 	 char aux;
 	 SceneObject* auxObj;
@@ -348,12 +347,14 @@ bool Game::checkCollision(const Rectangle& rect){
 			 auxObj = new Balloon(this);
 			 break;
 		 default:
-			 auxObj = new Arrow(this);
+			 auxObj = nullptr;
 			 cout << "Error en el cargado, cabecera no reconocida.";
 		 }
 
-		 auxObj->load(savFile);
-		 _objs.push_back(auxObj);
+		 if (auxObj != nullptr) {
+			 auxObj->load(savFile);
+			 _objs.push_back(auxObj);
+		 }
 	 }
 
 	 savFile.close();
