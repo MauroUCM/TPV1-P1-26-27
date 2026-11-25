@@ -4,12 +4,13 @@
 #include <fstream>
 #include <filesystem>
 #include "texture.h"
+#include "SceneObject.h"
+
 #include "Balloon.h"
 #include "Bow.h"
 #include "Arrow.h"
-#include "InfoBar.h"
-#include "SceneObject.h"
 #include "Butterfly.h"
+#include "InfoBar.h"
 
 using namespace std;
 
@@ -17,6 +18,7 @@ using namespace std;
 constexpr const char* const WINDOW_TITLE = "Bow & Arrow 1.0";
 constexpr const char* IMAGE_ROOT = "../assets/images/";
 constexpr const char* LEVEL_ROOT = "../assets/levels/";
+constexpr const char* SAVE_LOC = "../saved.txt";
 
 // Estructura para especificar las texturas que hay que
 // cargar y el tamaño de su matriz de frames
@@ -106,10 +108,7 @@ void Game::update(const float delta) {
 
 	// generación de globos
 	balElapsed += delta;
-	if (balElapsed >= balDelay) {
-		balElapsed = 0;
-		addRndBalloon();
-	}
+	if (balElapsed >= balDelay) addRndBalloon();
 
 	// comprueba si es el final del juego
 	if (mustDelBfr <= 0) {
@@ -134,9 +133,7 @@ void Game::run() {
 		render();
 
 		float elapsedRun = SDL_GetTicks() - currentTime;
-		if (elapsedRun < FRAME_PERIOD) {
-			SDL_Delay(FRAME_PERIOD - elapsedRun);
-		}
+		if (elapsedRun < FRAME_PERIOD) SDL_Delay(FRAME_PERIOD - elapsedRun);
 	}
 
 	std::cout << std::format("You got up to level {}!\n", curLevel);
@@ -168,12 +165,7 @@ void Game::handleEvents() {
 }
 
 bool Game::checkCollision(const Rectangle& rect){
-	for (auto* col : _objs) {
-		if (col->hit(rect)) {
-			return true;
-		}
-	}
-
+	for (auto* col : _objs) if (col->hit(rect)) return true;
 	return false;
 }
 
@@ -185,6 +177,8 @@ bool Game::checkCollision(const Rectangle& rect){
 			(float)WINDOW_HEIGHT),
 		-(float)uniform_int_distribution<int>(1, 5)(rndGenerator),
 		uniform_int_distribution<int>(0, 6)(rndGenerator)));
+
+	balElapsed = 0;
  }
 
  void Game::addRndButterfly() {
@@ -219,7 +213,6 @@ bool Game::checkCollision(const Rectangle& rect){
 
 		levelIn.open(fileName);
 		if (!levelIn.is_open()) throw "Level file not found.";
-
 		while (levelIn >> key) {
 			if (key == "arrows") {			// numero de flechas
 				levelIn >> aux;
@@ -268,6 +261,7 @@ bool Game::checkCollision(const Rectangle& rect){
 		7.0f);
 	_objs.push_back(bow);
 	_objs.push_back(new InfoBar(this));
+
 	for (int i = 0; i < currentBtfly; i++) addRndButterfly();
  }
 
@@ -296,8 +290,9 @@ bool Game::checkCollision(const Rectangle& rect){
 
  void Game::saveGame() {
 	 std::ofstream savFile;
-	 savFile.open("saved.txt");
+	 savFile.open(SAVE_LOC);
 
+	 // atributos del game
 	 savFile << nArrows << " " << balPoints << " " << goal << " " << curLevel << " "
 		 << balDelay << " " << bgcolor << " " << score << " " << totalScore << " "
 		 << btflyEndgame << " " << goalEndgame << "\n";
@@ -318,7 +313,7 @@ bool Game::checkCollision(const Rectangle& rect){
 
 	 // archivo
 	 std::ifstream savFile;
-	 savFile.open("saved.txt");
+	 savFile.open(SAVE_LOC);
 
 	 // atributos del game
 	 savFile >> nArrows >> balPoints >> goal >> curLevel >> balDelay >> bgcolor 
@@ -330,7 +325,6 @@ bool Game::checkCollision(const Rectangle& rect){
 
 	 char aux;
 	 SceneObject* auxObj;
-
 	 while (savFile  >> aux) {
 		 switch (aux) {
 		 case 'B':	// Bow
@@ -359,5 +353,5 @@ bool Game::checkCollision(const Rectangle& rect){
 
 	 savFile.close();
 
-	 std::cout << "Partida cargada\n";
+	 std::cout << "Partida cargada con exito\n";
  }

@@ -12,7 +12,6 @@
 // Declaraciones anticipadas
 class Texture;
 class Bow;
-//class Balloon;
 class SceneObject;
 
 /**
